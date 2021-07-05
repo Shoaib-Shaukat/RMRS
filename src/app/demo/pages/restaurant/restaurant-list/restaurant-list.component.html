@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col-xl-12">
+        <app-card [hidHeader]="true" blockClass="table-border-style">
+            <div class="" style="
+            display: inline-grid;
+        ">
+                <!-- <h4 class="float-left">Restaurants</h4> -->
+                <h5>Restaurant List</h5>
+                <button type="button" style="
+                right: 30px;
+                position: absolute;
+            " class="btn btn-icon btn-success float-right" (click)=addRestaurant()>ADD
+                    NEW</button>
+                <hr>
+            </div>
+            <div class="table-responsive">
+                <table datatable="" class="table table-striped row-border table-hover dataTable" id="DataTables_Table_0"
+                    role="grid" aria-describedby="DataTables_Table_0_info">
+                    <tbody>
+                        <tr role="row" class="even" *ngFor="let restaurant of RestaurantList">
+                            <td class="sorting_1">
+                                <div class="d-inline-block align-middle"><img src="{{restaurant.Image}}"
+                                        alt="user image" class="img-radius align-top m-r-15" style="width: 40px;">
+                                    <div class="d-inline-block">
+                                        <h6 class="m-b-0">{{restaurant.RestaurantName}}</h6>
+                                        <p class="m-b-0">{{restaurant.Address}}</p>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="overlay-edit text-center">
+                                    <button type="button" class="btn btn-icon btn-secondary circle-btn-icon"
+                                        (click)=viewRestaurant(restaurant.RestaurantID)
+                                        title="Access restaurant profile"><i class="feather icon-eye"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </app-card>
+    </div>
+</div>
+<app-ui-modal #modalDefault>
+    <div class="app-modal-header">
+        <h5 class="modal-title">Confirm Delete</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+            (click)="modalDefault.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body">
+        <p>Are you sure to delete this employee?</p>
+    </div>
+    <div class="app-modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modalDefault.hide()">Close</button> -->
+        <button type="button" class="btn btn-primary">Confirm</button>
+    </div>
+</app-ui-modal>

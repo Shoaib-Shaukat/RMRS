@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="col-xl-12">
+        <app-card [hidHeader]="true" blockClass="table-border-style">
+            <div class="" style="
+            display: inline-grid;
+        ">
+                <!-- <h4 class="float-left">orders</h4> -->
+                <h5 class="mb-3">Order History</h5>
+                <button type="button" style="
+                right: 150px;
+                position: absolute;
+            " class="btn btn-icon btn-success float-right" [routerLink]="['/order/order-history']">History
+                </button>
+                <button type="button" style="
+                    right: 30px;
+                    position: absolute;
+                " class="btn btn-icon btn-success float-right" [routerLink]="['/pos']">Take
+                    Order</button>
+              
+            </div>
+            <hr>
+            <div class="table-responsive">
+                <table datatable="" class="table table-hover m-b-0" id="DataTables_Table_0" role="grid"
+                    aria-describedby="DataTables_Table_0_info">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Order Date</th>
+                            <th>Customer Name</th>
+                            <th>Order Status</th>
+                            <th class="text-right">Total Amount(Rs.)</th>
+                            <th style="width: 200px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr role="row" *ngFor="let order of orderList">
+                            <td *ngIf = "order.Status == 'PAYMENT_MADE'">
+                                {{order.OrderID}}
+                            </td>
+                            <td *ngIf = "order.Status == 'PAYMENT_MADE'">
+                                {{order.OrderDate | date: 'medium' :'GMT+5:00' }}
+                            </td>
+                            <td *ngIf = "order.Status == 'PAYMENT_MADE'">
+                                {{order.CustomerName}}
+                            </td>
+                            <td *ngIf = "order.Status == 'PAYMENT_MADE'">
+                                <div>
+                                    <label class="badge badge-light-success">{{order.Status}}</label>
+                                </div>
+                            </td>
+                            <td class="text-right" *ngIf = "order.Status == 'PAYMENT_MADE'">
+                                {{order.TotalAmount | number}}
+                            </td>
+                            <td *ngIf = "order.Status == 'PAYMENT_MADE'">
+                                <div class="overlay-edit text-center">
+                                        <button type="button" class="btn btn-icon btn-secondary circle-btn-icon"
+                                        (click)="viewOrder(order.OrderID)"
+                                        title="View order details"><i class="feather icon-eye"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </app-card>
+    </div>
+</div>

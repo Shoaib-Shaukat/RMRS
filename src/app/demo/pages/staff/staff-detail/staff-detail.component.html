@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-sm-12">
+        <app-card [hidHeader]="true" cardTitle="Hello Card">
+            <h5 class="">Staff Detail</h5>
+            <hr>
+            <dl class="dl-horizontal row">
+                <dt class="col-sm-2">ID:</dt>
+                <dd class="col-sm-10">{{detailOfStaff.StaffID}}</dd>
+
+                <dt class="col-sm-2">Full Name:</dt>
+                <dd class="col-sm-10">{{detailOfStaff.StaffName}}</dd>
+
+                <dt class="col-sm-2">User Name:</dt>
+                <dd class="col-sm-10">{{detailOfStaff.Username}}</dd>
+
+                <dt class="col-sm-2">Address:</dt>
+                <dd class="col-sm-10">{{detailOfStaff.Address}}</dd>
+
+                <dt class="col-sm-2">CNIC:</dt>
+                <dd class="col-sm-10">{{detailOfStaff.CNIC}}</dd>
+
+                <dt class="col-sm-2">Mobile No:</dt>
+                <dd class="col-sm-10">{{detailOfStaff.MobileNumber}}</dd>
+
+                <dt class="col-sm-2">Permissions:</dt>
+                <dd class="col-sm-10">
+                    <span *ngFor="let permission of detailOfStaff.Permission">{{permission}} </span>
+                </dd>
+            </dl>
+            <hr>
+
+            <button type="submit" class="btn btn-primary float-right">Edit</button>
+            <button type="submit" class="btn btn-primary float-right" [routerLink]="['/staff/staff-list']">Back</button>
+        </app-card>
+    </div>
+</div>

@@ -1,0 +1,197 @@
+<div class="row">
+    <div class="col-sm-12">
+        <app-card [hidHeader]="true" [options]="false">
+            <h5 class="" *ngIf="!this.xyz">Add Staff</h5>
+            <h5 class="" *ngIf="this.xyz">Edit Staff</h5>
+            <hr>
+
+            <form action="javascript:" [formGroup]="addStaffForm" (ngSubmit)="onSubmit()">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="exampleInputEmail1">Full Name</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="" formControlName="StaffName" maxlength="15"
+                            [class.is-invalid]="addStaffForm.controls['StaffName'].invalid && addStaffForm.controls['StaffName'].touched"
+                            required>
+                        <div *ngIf="(addStaffForm.controls['StaffName'].invalid && addStaffForm.controls['StaffName'].touched) || addStaffForm.controls['StaffName'].dirty"
+                            class="text-left">
+                            <small *ngIf="addStaffForm.controls['StaffName'].errors?.required" class="text-danger">Name
+                                is
+                                required!</small>
+                            <!--question mark(?) is a safe navigation operator-->
+                            <small *ngIf="addStaffForm.controls['StaffName'].errors?.pattern" class="text-danger">Enter
+                                alphabets only
+                                and atleast 3!</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="exampleInputEmail1">Password</label>
+                        <input type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="" formControlName="Password" maxlength="20"
+                            [class.is-invalid]="addStaffForm.controls['Password'].invalid && addStaffForm.controls['Password'].touched"
+                            required>
+                        <div *ngIf="(addStaffForm.controls['Password'].invalid && addStaffForm.controls['Password'].touched) || addStaffForm.controls['Password'].dirty"
+                            class="text-left">
+                            <small *ngIf="addStaffForm.controls['Password'].errors?.required"
+                                class="text-danger">Password
+                                is
+                                required!</small>
+                            <!--question mark(?) is a safe navigation operator-->
+                            <small *ngIf="addStaffForm.controls['Password'].errors?.pattern" class="text-danger">Your
+                                password should be atleast 8 charcters long and must
+                                contain atleast one alphabet letter, one number, and one special character!</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="exampleInputEmail1">User Name</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            placeholder="" formControlName="UserName" maxlength="20"
+                            [class.is-invalid]="addStaffForm.controls['UserName'].invalid && addStaffForm.controls['UserName'].touched"
+                            required>
+                        <div *ngIf="(addStaffForm.controls['UserName'].invalid && addStaffForm.controls['UserName'].touched) || addStaffForm.controls['UserName'].dirty"
+                            class="text-left">
+                            <small *ngIf="addStaffForm.controls['UserName'].errors?.required" class="text-danger">User
+                                Name
+                                required!</small>
+                            <!--question mark(?) is a safe navigation operator-->
+                            <small *ngIf="addStaffForm.controls['UserName'].errors?.pattern" class="text-danger">
+                                Enter atleast 3 characters!</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>DOB</label>
+                        <input type="date" class="form-control" placeholder=" " formControlName="DOB"
+                            [class.is-invalid]="addStaffForm.controls['DOB'].invalid && addStaffForm.controls['DOB'].touched"
+                            required>
+                        <div *ngIf="(addStaffForm.controls['DOB'].invalid && addStaffForm.controls['DOB'].touched) || addStaffForm.controls['DOB'].dirty"
+                            class="text-left">
+                            <small *ngIf="addStaffForm.controls['DOB'].errors?.required" class="text-danger">Date of
+                                Birth is
+                                required!</small>
+                            <!--question mark(?) is a safe navigation operator-->
+                            <small *ngIf="addStaffForm.controls['DOB'].errors?.pattern" class="text-danger">Date
+                                of Birth is
+                                InValid</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4 ">
+                        <label>Contact Number</label>
+                        <input type="number" class="form-control" placeholder="(03XXXXXXXXX)"
+                            formControlName="MobileNumber" maxlength="11" minlength="11">
+                        <div *ngIf="(addStaffForm.controls['MobileNumber'].invalid && addStaffForm.controls['MobileNumber'].touched) || addStaffForm.controls['MobileNumber'].dirty"
+                            class="text-left">
+                            <small *ngIf="addStaffForm.controls['MobileNumber'].errors?.required"
+                                class="text-danger">Mobile Number is
+                                required!</small>
+                            <!--question mark(?) is a safe navigation operator-->
+                            <small *ngIf="addStaffForm.controls['MobileNumber'].errors?.pattern"
+                                class="text-danger">Mobile
+                                Number should consist 11 digits!</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4 ">
+                        <label for="exampleInputPassword1">CNIC</label>
+                        <input type="number" class="form-control" id="exampleInputPassword1" placeholder=""
+                            formControlName="CNICNo" maxlength="13" minlength="13">
+                        <div *ngIf="(addStaffForm.controls['CNICNo'].invalid && addStaffForm.controls['CNICNo'].touched) || addStaffForm.controls['CNICNo'].dirty"
+                            class="text-left">
+                            <small *ngIf="addStaffForm.controls['CNICNo'].errors?.required" class="text-danger">CNIC
+                                is
+                                required!</small>
+                            <!--question mark(?) is a safe navigation operator-->
+                            <small *ngIf="addStaffForm.controls['CNICNo'].errors?.pattern" class="text-danger">CNIC
+                                should be of 13
+                                Digits</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="exampleFormControlTextarea1">Address</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="6"
+                            formControlName="Address" maxlength="250"></textarea>
+                        <div *ngIf="(addStaffForm.controls['Address'].invalid && addStaffForm.controls['Address'].touched) || addStaffForm.controls['Address'].dirty"
+                            class="text-left">
+                            <small *ngIf="addStaffForm.controls['Address'].errors?.required" class="text-danger">Address
+                                is
+                                required!</small>
+                            <!--question mark(?) is a safe navigation operator-->
+                            <small *ngIf="addStaffForm.controls['Address'].errors?.pattern" class="text-danger">Cannot
+                                exceed 250 characters!</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <div class="permission">Permission</div>
+                        <br>
+                        <div class="options">
+                            <input type="checkbox" class="checkboxfields mr-2" id="resCheckBox" #resCheckBox
+                                (click)="permissionChecked(resCheckBox.checked, 'Restaurant')">Restaurant
+                        </div>
+                        <br>
+                        <div class="options">
+                            <input type="checkbox" class="checkboxfields mr-2" id="staffCheckBox" #staffCheckBox
+                                (click)="permissionChecked(staffCheckBox.checked, 'Staff')">Staff
+                        </div>
+                        <br>
+                        <div class="options">
+                            <input type="checkbox" class="checkboxfields mr-2" id="menuCheckBox" #menuCheckBox
+                                (click)="permissionChecked(menuCheckBox.checked, 'Menu')">Menu
+                        </div>
+                        <br>
+                        <div class="options">
+                            <input type="checkbox" class="checkboxfields mr-2" id="orderCheckBox" #orderCheckBox
+                                (click)=" hideOptions(); permissionChecked(orderCheckBox.checked, 'Order'); ">Order
+                            <span [hidden]="!forOrder">
+                                <input type="checkbox" class="checkboxfields mr-2" id="editCheckBox" #editCheckBox
+                                    (click)="permissionChecked(editCheckBox.checked, 'Order-Edit')"
+                                    [checked]="!forOrder">Order-Edit
+                                <input type="checkbox" class="checkboxfields mr-2" id="viewCheckBox" #viewCheckBox
+                                    (click)="permissionChecked(viewCheckBox.checked, 'Order-View')"
+                                    [checked]="!forOrder">Order-View
+                                <input type="checkbox" class="checkboxfields mr-2" id="acceptCheckBox" #acceptCheckBox
+                                    (click)="permissionChecked(acceptCheckBox.checked, 'Order-Accept')"
+                                    [checked]="!forOrder">Order-Accept
+                                <input type="checkbox" class="checkboxfields mr-2" id="paymentCheckBox" #paymentCheckBox
+                                    (click)="permissionChecked(paymentCheckBox.checked, 'Order-PaymentMade')"
+                                    [checked]="!forOrder">Payment-Made
+                                <input type="checkbox" class="checkboxfields mr-2" id="printInvoiceCheckBox"
+                                    #printInvoiceCheckBox
+                                    (click)="permissionChecked(printInvoiceCheckBox.checked, 'Order-PrintInvoice')"
+                                    [checked]="!forOrder">Print-Invoice
+                                <input type="checkbox" class="checkboxfields mr-2" id="takeOrderCheckBox"
+                                    #takeOrderCheckBox
+                                    (click)="permissionChecked(takeOrderCheckBox.checked, 'Take-Order')"
+                                    [checked]="!forOrder">Take-Order
+                            </span>
+                        </div>
+                        <br>
+                        <div class="options">
+                            <input type="checkbox" class="checkboxfields mr-2" id="reservationCheckBox"
+                                #reservationCheckBox
+                                (click)="permissionChecked(reservationCheckBox.checked, 'Reservation')">Reservation
+                        </div>
+                        <br>
+                        <div class="options">
+                            <input type="checkbox" class="checkboxfields mr-2" id="posCheckBox" #posCheckBox
+                                (click)="permissionChecked(posCheckBox.checked, 'Point of sale')">POS
+                        </div>
+                        <br>
+                        <div class="options">
+                            <input type="checkbox" class="checkboxfields mr-2" id="reportsCheckBox" #reportsCheckBox
+                                (click)="permissionChecked(reportsCheckBox.checked, 'Reports')">Reports
+                        </div>
+                        <br>
+                    </div>
+                </div>
+
+                <hr>
+                <button type="submit" class="btn btn-primary float-right" *ngIf="!this.xyz"
+                    [disabled]="!addStaffForm.valid">ADD</button>
+                <button type="submit" class="btn btn-primary float-right" *ngIf="this.xyz"
+                    [disabled]="!addStaffForm.valid">SAVE CHANGES</button>
+                <button type="submit" class="btn btn-primary float-right" (click)=canceled()>CANCEL</button>
+            </form>
+
+        </app-card>
+    </div>
+
+</div>

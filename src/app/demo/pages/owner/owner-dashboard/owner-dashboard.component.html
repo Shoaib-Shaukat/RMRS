@@ -1,0 +1,52 @@
+<div class="row">
+    <!-- order-card start -->
+    <div class="col-md-6 col-xl-4">
+      <app-card [hidHeader]="true" cardClass="order-card">
+        <h5 class="text-left">
+          <i class="fa fa-database float-left"></i>
+          <span>Rs 10,000</span>
+          <p class="color-gray">Total Revenue</p>
+        </h5>
+      </app-card>
+    </div>
+    <div class="col-md-6 col-xl-4">
+      <app-card [hidHeader]="true" cardClass="order-card">
+        <h5 class="text-left">
+          <i class="fa fa-users float-left"></i>
+          <span>300</span>
+          <p class="color-gray">Available Staff</p>
+        </h5>
+      </app-card>
+    </div>
+    <div class="col-md-6 col-xl-4">
+      <app-card [hidHeader]="true" cardClass="order-card">
+        <h5 class="text-left">
+          <i class="fa fa-utensils float-left"></i>
+          <span>36</span>
+          <p class="color-gray">Total restaurants</p>
+        </h5>
+      </app-card>
+    </div>
+    <!-- <div class="col-md-6 col-xl-3">
+      <app-card [hidHeader]="true" cardClass="order-card">
+        <h5 class="text-left">
+          <i class="fa fa-money-bill float-left"></i>
+          <span>Rs 10,000</span>
+          <p class="color-gray">Tax payable amount</p>
+        </h5>
+      </app-card>
+    </div> -->
+    <!-- [ variant-chart ] start -->
+  
+  
+    <div class="col-md-12">
+      <app-card cardTitle="Bar chart" [options]="false">
+        <app-apex-chart chartID="bar-chart-1-cac" [chartConfig]="this.chartDB.bar1CAC"></app-apex-chart>
+      </app-card>
+    </div>
+  
+  
+  
+    <!-- [ variant-chart ] end -->
+  
+  </div>

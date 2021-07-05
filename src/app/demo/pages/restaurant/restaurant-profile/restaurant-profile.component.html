@@ -1,0 +1,257 @@
+<div class="row">
+    <div class="col-sm-12">
+        <app-card cardTitle="Profile" [options]="false">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="feed-user-img text-center">
+                        <img src={{imagePath}} alt="User-Profile-Image" class="img-radius-of-profile" style="
+                        height: 100px;
+                    ">
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <h5>{{RestaurantName}}</h5>
+                    <button type="button" class="btn btn-icon btn-success" (click)=editRestaurant()>Edit profile
+                    </button>
+                </div>
+                <!-- <div class="col-md-3 border-left">
+                    <div class="table-responsive">
+                        <table datatable="" class="table table-hover m-b-0" id="DataTables_Table_0" role="grid"
+                            aria-describedby="DataTables_Table_0_info">
+                            <tbody>
+                                <tr role="row">
+                                    <strong class="label label-primary">NTN Number: </strong>{{NTNnumber}}
+                                </tr>
+                                <tr role="row">
+                                    <strong class="label label-primary">Address: </strong>{{Address}}
+                                </tr>
+                                <tr role="row">
+                                    <strong class="label label-primary">Category: </strong>{{RestaurantCategory}}
+                                </tr>
+                                <tr role="row">
+                                    <strong class="label label-primary">Rating: </strong>
+                                    <bar-rating name="rating" [(ngModel)]="Rating" [max]="5" [theme]="'default'">
+                                    </bar-rating>
+                                    ({{RatingCount}})
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div> -->
+
+                <div class="col-md-3 border-left">
+                    <p class="row ml-2">
+                        <strong class="label label-primary mr-2">NTN Number: </strong>{{NTNnumber}}
+                    </p>
+                    <p class="row ml-2">
+                        <strong class="label label-primary mr-2">Address: </strong>{{Address}}
+                    </p>
+                    <p class="row ml-2">
+                        <strong class="label label-primary mr-2">Category: </strong>{{RestaurantCategory}}
+                    </p>
+                    <p class="row ml-2">
+                        <strong class="label label-primary mr-2">Rating: </strong>
+                        <bar-rating name="rating" class="mr-1" [(ngModel)]="Rating" [max]="5" [theme]="'default'">
+                        </bar-rating>
+                        ({{RatingCount}})
+                    </p>
+                </div>
+            </div>
+        </app-card>
+    </div>
+
+    <!-- //........................................ -->
+    <ng-container *ngIf="restaurantProfileInfo != undefined">
+        <div class="col-md-4">
+            <app-card cardTitle="Delivery" [options]="false">
+                <div class="table-responsive">
+                    <table datatable="" class="table table-hover m-b-0" id="DataTables_Table_0" role="grid"
+                        aria-describedby="DataTables_Table_0_info">
+                        <thead>
+                            <tr>
+                                <th class="col-md-6">Delivery Time</th>
+                                <th class="col-md-6" style="text-align: right;">Charges (Rs.)</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="restaurantProfileInfo.Delivery.length != 0">
+                            <tr role="row" *ngFor="let delivery of restaurantProfileInfo.Delivery">
+                                <td class="col-md-6">
+                                    {{delivery.DeliveryTime}} min
+                                </td>
+                                <td class="col-md-6" style="text-align: right;">
+                                    {{delivery.DeliveryCharges | number}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </app-card>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="restaurantProfileInfo != undefined">
+        <div class="col-md-4">
+            <app-card cardTitle="Discounts" [options]="false">
+                <div class="table-responsive">
+                    <table datatable="" class="table table-hover m-b-0" id="DataTables_Table_0" role="grid"
+                        aria-describedby="DataTables_Table_0_info">
+                        <thead>
+                            <tr>
+                                <th class="col-md-6">Discount Name</th>
+                                <th class="col-md-6" style="text-align: right;">Discount %</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="discountsArr != 0">
+                            <tr role="row" *ngFor="let eachDiscount of discountsArr">
+                                <td class="col-md-6">
+                                    {{eachDiscount.DiscountName}}
+                                </td>
+                                <td class="col-md-6" style="text-align: right;">
+                                    {{eachDiscount.DiscountPercentage}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </app-card>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="restaurantProfileInfo != undefined">
+        <div class="col-md-4">
+            <app-card cardTitle="Timings" [options]="false">
+                <div class="table-responsive">
+                    <table datatable="" class="table table-hover m-b-0" id="DataTables_Table_0" role="grid"
+                        aria-describedby="DataTables_Table_0_info">
+                        <thead>
+                            <tr>
+                                <th class="col-md-4">DAYS</th>
+                                <th class="col-md-4" style="text-align: center;">START TIME</th>
+                                <th class="col-md-4" style="text-align: center;">END TIME</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="restaurantProfileInfo.Timings != 0">
+                            <tr role="row" *ngFor="let eachDay of restaurantProfileInfo.Timings">
+                                <td class="col-md-4">
+                                    {{eachDay.Day}}
+                                </td>
+                                <td class="col-md-4" style="text-align: center;">
+                                    {{eachDay.StartTime}}
+                                </td>
+                                <td class="col-md-4" style="text-align: center;">
+                                    {{eachDay.EndTime}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </app-card>
+        </div>
+    </ng-container>
+
+    <!-- //......................................... -->
+    <div class="col-md-6">
+        <app-card cardTitle="Recent Deals" [options]="false">
+            <hr>
+            <div class="table-responsive">
+                <table datatable="" class="table table-hover m-b-0" id="DataTables_Table_0" role="grid"
+                    aria-describedby="DataTables_Table_0_info">
+                    <thead>
+                        <tr>
+                            <th class="col-md-4">DEAL Name</th>
+                            <th class="col-md-4">Deal ID</th>
+                            <th class="col-md-3" style="text-align: right;">Price (Rs.)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr role="row" *ngFor="let deal of ListofDeals  | slice:0:4">
+                            <td class="col-md-4 wrapLongTxt">
+                                {{deal.DealName}}
+                            </td>
+                            <td class="col-md-4">
+                                {{deal.DealID}}
+                            </td>
+                            <td class="col-md-3" style="text-align: right;">
+                                {{deal.DealPrice | number}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </app-card>
+    </div>
+    <div class="col-md-6">
+        <app-card cardTitle="Recent Items" [options]="false">
+            <hr>
+            <div class="table-responsive">
+                <table datatable="" class="table table-hover m-b-0" id="DataTables_Table_0" role="grid"
+                    aria-describedby="DataTables_Table_0_info">
+                    <thead>
+                        <tr>
+                            <th class="col-md-6">Item Name</th>
+                            <th class="col-md-3" style="text-align: center;">Category</th>
+                            <th class="col-md-3" style="text-align: right;">Price (Rs.)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr role="row" *ngFor="let item of allitemsList  | slice:0:4">
+                            <td class="col-md-6 wrapLongTxt">
+                                {{item.MenuName}}
+                            </td>
+                            <td class="col-md-3" style="text-align: center;">
+                                {{item.MenuCategory}}
+                            </td>
+                            <td class="col-md-3" style="text-align: right;" *ngIf="item.isVariant == false">
+                                {{item.CalculatedPrice | number}}
+                            </td>
+                            <td class="col-md-3" style="text-align: right;" *ngIf="item.isVariant == true">
+                                {{item.CalculatedPrice | number}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </app-card>
+    </div>
+    <div class="col-sm-12">
+        <app-card cardTitle="Recent Orders" [options]="false">
+            <hr>
+            <div class="table-responsive">
+                <table datatable="" class="table table-hover m-b-0" id="DataTables_Table_0" role="grid"
+                    aria-describedby="DataTables_Table_0_info">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Order Date</th>
+                            <th>Customer Name</th>
+                            <th>Order Status</th>
+                            <th style="text-align: right;">Total Amount (Rs.)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr role="row" *ngFor="let order of orderList | slice:0:4">
+                            <td>
+                                {{order.OrderID}}
+                            </td>
+                            <td>
+                                {{order.OrderDate | date: 'medium' :'GMT+5:00'}}
+                            </td>
+                            <td>
+                                {{order.CustomerName}}
+                            </td>
+                            <td>
+                                <div>
+                                    <label class="badge badge-light-warning">{{order.Status}}</label>
+                                </div>
+                            </td>
+                            <td style="text-align: right;">
+                                {{order.TotalAmount | number}}
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </app-card>
+    </div>
+</div>

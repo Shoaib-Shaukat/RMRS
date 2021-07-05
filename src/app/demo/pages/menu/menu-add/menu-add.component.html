@@ -1,0 +1,369 @@
+<div class="row">
+    <div class="col-sm-12">
+        <app-card [hidHeader]="true" [options]="false">
+            <div class="" style="display: inline-grid;">
+                <h5 class="mb-3" *ngIf="addForm">Add Menu Item</h5>
+                <h5 class="mb-3" *ngIf="editForm">Edit Menu Item</h5>
+                <button type="button" style="right: 30px;position: absolute;"
+                    class="btn btn-icon btn-success float-right text-uppercase" data-toggle="modal"
+                    data-target="#exampleModal" (click)="clearAddVariantForm(); myLargeModalLabel.show()">ADD
+                    Variant</button>
+
+            </div>
+            <hr>
+            <form action="javascript:" [formGroup]="addMenuForm" (ngSubmit)="onSubmit()">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="inputEmail4">Item Name</label>
+                        <input type="text" class="form-control" id="itemName" contenteditable="true"
+                            formControlName="MenuName" maxlength="30"
+                            [class.is-invalid]="addMenuForm.controls['MenuName'].invalid && addMenuForm.controls['MenuName'].touched"
+                            required>
+                        <div *ngIf="(addMenuForm.controls['MenuName'].invalid && addMenuForm.controls['MenuName'].touched) || addMenuForm.controls['MenuName'].dirty"
+                            class="text-left">
+                            <small *ngIf="addMenuForm.controls['MenuName'].errors?.required" class="text-danger">Menu
+                                Name is
+                                required!</small>
+                            <small *ngIf="addMenuForm.controls['MenuName'].errors?.pattern" class="text-danger">Enter
+                                alphabets only
+                                and atleast 3!</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputEmail4">Reference ID</label>
+                        <input type="text" class="form-control" id="itemName" contenteditable="true"
+                            formControlName="RefId" maxlength="50"
+                            [class.is-invalid]="addMenuForm.controls['RefId'].invalid && addMenuForm.controls['RefId'].touched"
+                            required>
+                        <div *ngIf="(addMenuForm.controls['RefId'].invalid && addMenuForm.controls['RefId'].touched) || addMenuForm.controls['RefId'].dirty"
+                            class="text-left">
+                            <small *ngIf="addMenuForm.controls['RefId'].errors?.required" class="text-danger">Reference
+                                ID is
+                                required!</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label>Select Menu Category</label>
+                        <select id="restaurant" class="form-control" formControlName="MenuCategoryName"
+                            (change)="getCategoryData($event.target.value)">
+                            <option value="">Select Category</option>
+                            <option *ngFor="let menuCategory of menuCategoryList"
+                                [value]="menuCategory.CategoryID + menuCategory.CategoryName"
+                                [selected]="menuCategory.CategoryName == MenuCategory">
+                                {{menuCategory.CategoryName}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Menu Available</label>
+                        <select id="inputState" class="form-control" formControlName="MenuAvailability">
+                            <option value="">Select Option</option>
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+                    </div>
+                    <!-- <div class="form-group col-md-4 ">
+                        <label>Start Date</label>
+                        <input type="datetime-local" class="form-control" placeholder=" " formControlName="StartDateTime"
+                            [class.is-invalid]="addMenuForm.controls['StartDateTime'].invalid && addMenuForm.controls['StartDateTime'].touched"
+                            required>
+                        <div *ngIf="(addMenuForm.controls['StartDateTime'].invalid && addMenuForm.controls['StartDateTime'].touched) || addMenuForm.controls['StartDateTime'].dirty"
+                            class="text-left">
+                            <small *ngIf="addMenuForm.controls['StartDateTime'].errors?.required" class="text-danger">Start Date is
+                                required!</small>
+                            <small *ngIf="addMenuForm.controls['StartDateTime'].errors?.pattern" class="text-danger">Start Date is
+                                InValid</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4 ">
+                        <label>End Date</label>
+                        <input type="datetime-local" class="form-control" placeholder=" " formControlName="EndDateTime"
+                            [class.is-invalid]="addMenuForm.controls['EndDateTime'].invalid && addMenuForm.controls['EndDateTime'].touched"
+                            required>
+                        <div *ngIf="(addMenuForm.controls['EndDateTime'].invalid && addMenuForm.controls['EndDateTime'].touched) || addMenuForm.controls['EndDateTime'].dirty"
+                            class="text-left">
+                            <small *ngIf="addMenuForm.controls['EndDateTime'].errors?.required" class="text-danger">End Date is
+                                required!</small>
+                            <small *ngIf="addMenuForm.controls['EndDateTime'].errors?.pattern" class="text-danger">End Date is
+                                InValid</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputEmail4">Promo Price</label>
+                        <input type="number" class="form-control" id="itemPrice" placeholder="{{this.Price}}"
+                            formControlName="PromoPrice"
+                            [class.is-invalid]="addMenuForm.controls['PromoPrice'].invalid && addMenuForm.controls['PromoPrice'].touched"
+                            required>
+                        <div *ngIf="(addMenuForm.controls['PromoPrice'].invalid && addMenuForm.controls['PromoPrice'].touched) || addMenuForm.controls['PromoPrice'].dirty"
+                            class="text-left">
+                            <small *ngIf="addMenuForm.controls['PromoPrice'].errors?.required" class="text-danger">Promo Price is
+                                required!</small>
+                            <small *ngIf="addMenuForm.controls['PromoPrice'].errors?.pattern" class="text-danger">Enter
+                                numbers only!</small>
+                        </div>
+                    </div> -->
+                    <!-- <div class="form-group col-md-4">
+                        <label for="inputEmail4">Item Price</label>
+                        <input type="text" class="form-control" id="itemPrice" formControlName="ItemPrice"
+                            options="{prefix: '', thousands: ',', decimal: '' }"
+                            [class.is-invalid]="addMenuForm.controls['ItemPrice'].invalid && addMenuForm.controls['ItemPrice'].touched"
+                            required>
+                        <div *ngIf="(addMenuForm.controls['ItemPrice'].invalid && addMenuForm.controls['ItemPrice'].touched) || addMenuForm.controls['ItemPrice'].dirty"
+                            class="text-left">
+                            <small *ngIf="addMenuForm.controls['ItemPrice'].errors?.required" class="text-danger">Price
+                                of Item is
+                                required!</small>
+                            <small *ngIf="addMenuForm.controls['ItemPrice'].errors?.pattern" class="text-danger">Enter
+                                numbers only!</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputEmail4">Discount %</label>
+                        <input type="text" class="form-control" id="itemPrice" formControlName="DiscountPrice"
+                            [class.is-invalid]="addMenuForm.controls['DiscountPrice'].invalid && addMenuForm.controls['DiscountPrice'].touched"
+                            required>
+                        <div *ngIf="(addMenuForm.controls['DiscountPrice'].invalid && addMenuForm.controls['DiscountPrice'].touched) || addMenuForm.controls['DiscountPrice'].dirty"
+                            class="text-left">
+                            <small *ngIf="addMenuForm.controls['DiscountPrice'].errors?.required"
+                                class="text-danger">Discount Price is required!</small>
+                            <small *ngIf="addMenuForm.controls['DiscountPrice'].errors?.pattern"
+                                class="text-danger">Enter
+                                numbers only!</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputEmail4">Calculated Price</label>
+                        <input type="text" class="form-control" id="itemPrice" formControlName="CalculatedPrice"
+                            value="{{ this.addMenuForm.controls['ItemPrice'].value - ((this.addMenuForm.controls['ItemPrice'].value * this.addMenuForm.controls['DiscountPrice'].value) / 100)}}"
+                            readonly>
+                    </div> -->
+                    <div class="form-group col-md-4" [hidden]="VariantAdded == true">
+                        <label for="inputEmail4">Item Price</label>
+                        <input type="number" class="form-control" id="itemPrice" formControlName="ItemPrice"
+                            options="{prefix: '', thousands: ',', decimal: '' }"
+                            [class.is-invalid]="addMenuForm.controls['ItemPrice'].invalid && addMenuForm.controls['ItemPrice'].touched"
+                            required>
+                        <div *ngIf="(addMenuForm.controls['ItemPrice'].invalid && addMenuForm.controls['ItemPrice'].touched) || addMenuForm.controls['ItemPrice'].dirty"
+                            class="text-left">
+                            <small *ngIf="addMenuForm.controls['ItemPrice'].errors?.required" class="text-danger">Price
+                                of Item is
+                                required!</small>
+                            <small *ngIf="addMenuForm.controls['ItemPrice'].errors?.pattern" class="text-danger">Enter
+                                numbers only!</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4" [hidden]="VariantAdded == true">
+                        <label for="inputEmail4">Discount %</label>
+                        <input type="number" maxlength="2" class="form-control" id="itemPrice"
+                            formControlName="DiscountPrice"
+                            [class.is-invalid]="addMenuForm.controls['DiscountPrice'].invalid && addMenuForm.controls['DiscountPrice'].touched"
+                            required>
+                        <div *ngIf="(addMenuForm.controls['DiscountPrice'].invalid && addMenuForm.controls['DiscountPrice'].touched) || addMenuForm.controls['DiscountPrice'].dirty"
+                            class="text-left">
+                            <small *ngIf="addMenuForm.controls['DiscountPrice'].errors?.required"
+                                class="text-danger">Discount Price is required!</small>
+                            <small *ngIf="addMenuForm.controls['DiscountPrice'].errors?.pattern"
+                                class="text-danger">Enter
+                                numbers only!</small>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4" [hidden]="VariantAdded == true">
+                        <label for="inputEmail4">Calculated Price</label>
+                        <input type="text" class="form-control" id="itemPrice" formControlName="CalculatedPrice"
+                            value="{{ this.addMenuForm.controls['ItemPrice'].value - ((this.addMenuForm.controls['ItemPrice'].value * this.addMenuForm.controls['DiscountPrice'].value) / 100)}}"
+                            readonly>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputEmail4">Description</label>
+                        <input type="text" class="form-control" id="itemName" contenteditable="true"
+                            formControlName="Description" maxlength="150"
+                            [class.is-invalid]="addMenuForm.controls['Description'].invalid && addMenuForm.controls['Description'].touched"
+                            required>
+                        <div *ngIf="(addMenuForm.controls['Description'].invalid && addMenuForm.controls['Description'].touched) || addMenuForm.controls['Description'].dirty"
+                            class="text-left">
+                            <small *ngIf="addMenuForm.controls['Description'].errors?.required"
+                                class="text-danger">Description is
+                                required!</small>
+                            <small *ngIf="addMenuForm.controls['Description'].errors?.pattern" class="text-danger">Enter
+                                alphabets only
+                                and atleast 3!</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label>Upload image</label>
+                        <input type="file" #Image accept="image/*" formControlName="AttachImage"
+                            (change)="handleFileInput($event.target.files); Uploadimage();"
+                            [class.is-invalid]="addMenuForm.controls['AttachImage'].invalid && addMenuForm.controls['AttachImage'].touched"
+                            required>
+                        <div *ngIf="(addMenuForm.controls['AttachImage'].invalid && addMenuForm.controls['AttachImage'].touched) || addMenuForm.controls['AttachImage'].dirty"
+                            class="text-left">
+                            <small *ngIf="addMenuForm.controls['AttachImage'].errors?.required"
+                                class="text-danger">Please upload the image</small>
+                            <!--question mark(?) is a safe navigation operator-->
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+            <div *ngIf="VariantsArray.length > 0">
+                <div class="table-responsive">
+                    <table datatable="" class="table table-striped row-border table-hover dataTable"
+                        id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                        <thead>
+                            <tr>
+                                <th>Variant Name</th>
+                                <th style="text-align: right;">Price(Rs.)</th>
+                                <th style="text-align: right;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr role="row" class="even" *ngFor="let eachVariant of VariantsArray">
+                                <td class="sorting_1">
+                                    <div class="d-inline-block">
+                                        <img src="assets/images/menu-item-placeholder-image.png" alt="user image"
+                                            class="img-radius align-top m-r-15" style="width: 40px;">
+                                        <div class="d-inline-block">
+                                            <h6 class="m-b-0">{{eachVariant.ItemName}}</h6>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="text-align: right;">
+                                    <div class="overlay-edit">
+                                        <span class="text-right"
+                                            *ngIf="eachVariant.DiscountPrice != 0">{{eachVariant.CalculatedPrice
+                                            | number}} / <del class="text-danger">{{eachVariant.ItemPrice |
+                                                number}}</del></span>
+                                        <span class="text-right"
+                                            *ngIf="eachVariant.DiscountPrice == 0">{{eachVariant.ItemPrice
+                                            | number}}</span>
+                                    </div>
+                                </td>
+                                <td style="text-align: right;">
+                                    <button type="button" class="btn btn-icon btn-info circle-btn-icon" title="Edit"
+                                        [hidden]="!eachVariant.VariantID"><i class="feather icon-edit"
+                                            (click)="editVariant(eachVariant.VariantID); myLargeModalLabel.show();"></i></button>
+                                    <button type="button" class="btn btn-icon btn-danger circle-btn-icon"
+                                        (click)="setDeleteVariant(eachVariant.VariantID,eachVariant.ItemName); deleteVariant.show();"><i
+                                            class="feather icon-trash-2" title="Delete"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr>
+            <button type="submit" class="btn btn-primary float-right" [disabled]="!addMenuForm.valid"
+                (click)="onSubmit()" *ngIf="addForm">ADD</button>
+            <button type="submit" class="btn btn-primary float-right" (click)="updateMenuItem()"
+                *ngIf="editForm">UPDATE</button>
+            <button type="submit" class="btn btn-primary float-right" (click)=canceled()>Cancel</button>
+        </app-card>
+
+    </div>
+
+</div>
+
+<app-ui-modal #myLargeModalLabel [dialogClass]="'modal-lg'">
+    <div class="app-modal-header">
+        <h5 class="modal-title">Add Variant</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+            (click)="myLargeModalLabel.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body">
+        <form [formGroup]="addVariantForm">
+            <div class="form-row">
+                <!-- <div class="form-group col-md-4">
+                    <label for="item-name" class="col-form-label">Name variant</label>
+                    <input type="text" class="form-control" id="item-name">
+                </div> -->
+                <div class="form-group col-md-4">
+                    <label for="item-name">Name variant</label>
+                    <input type="text" class="form-control" id="itemName" contenteditable="true"
+                        formControlName="itemName" maxlength="70"
+                        [class.is-invalid]="addVariantForm.controls['itemName'].invalid && addVariantForm.controls['itemName'].touched"
+                        required>
+                    <div *ngIf="(addVariantForm.controls['itemName'].invalid && addVariantForm.controls['itemName'].touched) || addVariantForm.controls['itemName'].dirty"
+                        class="text-left">
+                        <small *ngIf="addVariantForm.controls['itemName'].errors?.required" class="text-danger">Menu
+                            Name is
+                            required!</small>
+                        <small *ngIf="addVariantForm.controls['itemName'].errors?.pattern" class="text-danger">Enter
+                            alphabets only
+                            and atleast 3!</small>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputEmail4">Item Price</label>
+                    <input type="number" class="form-control" id="itemPrice" formControlName="ItemPrice"
+                        options="{prefix: '', thousands: ',', decimal: '' }"
+                        [class.is-invalid]="addVariantForm.controls['ItemPrice'].invalid && addVariantForm.controls['ItemPrice'].touched"
+                        required>
+                    <div *ngIf="(addVariantForm.controls['ItemPrice'].invalid && addVariantForm.controls['ItemPrice'].touched) || addVariantForm.controls['ItemPrice'].dirty"
+                        class="text-left">
+                        <small *ngIf="addVariantForm.controls['ItemPrice'].errors?.required" class="text-danger">Price
+                            of Item is
+                            required!</small>
+                        <small *ngIf="addVariantForm.controls['ItemPrice'].errors?.pattern" class="text-danger">Enter
+                            numbers only!</small>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputEmail4">Discount %</label>
+                    <input type="number" maxlength="2" class="form-control" id="itemPrice"
+                        formControlName="DiscountPrice"
+                        [class.is-invalid]="addVariantForm.controls['DiscountPrice'].invalid && addVariantForm.controls['DiscountPrice'].touched"
+                        required>
+                    <div *ngIf="(addVariantForm.controls['DiscountPrice'].invalid && addVariantForm.controls['DiscountPrice'].touched) || addVariantForm.controls['DiscountPrice'].dirty"
+                        class="text-left">
+                        <small *ngIf="addVariantForm.controls['DiscountPrice'].errors?.required"
+                            class="text-danger">Discount Price is required!</small>
+                        <small *ngIf="addVariantForm.controls['DiscountPrice'].errors?.pattern"
+                            class="text-danger">Enter
+                            numbers only!</small>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputEmail4">Calculated Price</label>
+                    <input type="text" class="form-control" id="itemPrice" formControlName="CalculatedPrice"
+                        value="{{ this.addVariantForm.controls['ItemPrice'].value - ((this.addVariantForm.controls['ItemPrice'].value * this.addVariantForm.controls['DiscountPrice'].value) / 100)}}"
+                        readonly>
+                </div>
+
+                <div class="form-group col-md-8">
+                    <label for="message-text" class="col-form-label">Description</label>
+                    <textarea class="form-control" id="message-text" formControlName="Description"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="app-modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+            (click)="myLargeModalLabel.hide()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="addVartiantForm(); myLargeModalLabel.hide()"
+            [hidden]="!addMode">Add</button>
+        <button type="button" class="btn btn-primary" (click)="updateVartiantForm(); myLargeModalLabel.hide()"
+            [hidden]="addMode">Update</button>
+    </div>
+</app-ui-modal>
+
+
+<app-ui-modal #deleteVariant [dialogClass]="'modal-lg'">
+    <div class="app-modal-header">
+        <h5 class="modal-title">Confirmation</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+            (click)="deleteVariant.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body" *ngFor="let eachVariant of VariantsArray">
+        <ng-container *ngIf="eachVariant.ItemName == VariantName">
+            <p>Are you sure you want to delete <b>{{eachVariant.ItemName}}</b> variant?</p>
+        </ng-container>
+    </div>
+    <div class="app-modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+            (click)="deleteVariant.hide()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="confirmDelete(); deleteVariant.hide();">Delete</button>
+    </div>
+</app-ui-modal>

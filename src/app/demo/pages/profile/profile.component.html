@@ -1,0 +1,546 @@
+<div class="row">
+    <div class="col-sm-12">
+        <app-card cardTitle="Profile" [options]="false">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="feed-user-img text-center">
+                        <img src="assets/images/user/avatar-4.jpg" alt="User-Profile-Image" class="img-radius">
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <h5>Red Hot Chilli Pepper</h5>
+                    <p>Restaurant</p>
+                    <button type="button" class="btn btn-icon btn-success" [routerLink]="['/order/order-history']">Edit profile
+                    </button>
+                </div>
+                <div class="col-md-3 border-left">
+                    <p class="">
+                        <strong class="label label-primary">NTN Number:</strong> 248795647895
+                    </p>
+                    <p class="">
+                        <strong class="label label-primary">Branch Location:</strong> Rawalpindi / Punjab
+                    </p>
+                    <p class="">
+                        <strong class="label label-primary">Email:</strong> RHCP@gmail.com
+                    </p>
+                    <p class="">
+                        <strong class="label label-primary">Phone No:</strong> 051-5566998
+                    </p>
+                </div>
+            </div>
+        </app-card>
+    </div>
+    <div class="col-md-6">
+        <app-card cardTitle="Recent Orders Requests" [options]="false">
+            <hr>
+            <div class="table-responsive">
+                <table datatable="" class="table table-hover m-b-0" id="DataTables_Table_0" role="grid"
+                    aria-describedby="DataTables_Table_0_info">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Food Item</th>
+                            <th>Price</th>
+                            <th>Product ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr role="row">
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                Pizza
+                            </td>
+                            <td>
+                                Rs 444.00
+                            </td>
+                            <td>
+                                665588978
+                            </td>
+                        </tr>
+                        <tr role="row">
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                Pizza
+                            </td>
+                            <td>
+                                Rs 444.00
+                            </td>
+                            <td>
+                                665588978
+                            </td>
+                        </tr>
+                        <tr role="row">
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                Pizza
+                            </td>
+                            <td>
+                                Rs 444.00
+                            </td>
+                            <td>
+                                665588978
+                            </td>
+                        </tr>
+                        <tr role="row">
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                Pizza
+                            </td>
+                            <td>
+                                Rs 444.00
+                            </td>
+                            <td>
+                                665588978
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </app-card>
+    </div>
+    <div class="col-md-6">
+        <app-card cardTitle="Weekly Menu" [options]="false">
+            <hr>
+            <ngb-tabset type="pills">
+                <ngb-tab title="Mon" class="mb-3">
+                    <ng-template ngbTabContent>
+                        <div class="table-responsive">
+                            <table datatable="" class="table row-border table-hover dataTable" id="DataTables_Table_0"
+                                role="grid" aria-describedby="DataTables_Table_0_info">
+                                <thead>
+                                    <tr>
+                                        <th>Food Item</th>
+                                        <th>Price</th>
+                                        <th>Product ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Tue">
+                    <ng-template ngbTabContent>
+                        <div class="table-responsive">
+                            <table datatable="" class="table row-border table-hover dataTable" id="DataTables_Table_0"
+                                role="grid" aria-describedby="DataTables_Table_0_info">
+                                <thead>
+                                    <tr>
+                                        <th>Food Item</th>
+                                        <th>Price</th>
+                                        <th>Product ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Wed">
+                    <ng-template ngbTabContent>
+                        <div class="table-responsive">
+                            <table datatable="" class="table row-border table-hover dataTable" id="DataTables_Table_0"
+                                role="grid" aria-describedby="DataTables_Table_0_info">
+                                <thead>
+                                    <tr>
+                                        <th>Food Item</th>
+                                        <th>Price</th>
+                                        <th>Product ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Thr">
+                    <ng-template ngbTabContent>
+                        <div class="table-responsive">
+                            <table datatable="" class="table row-border table-hover dataTable" id="DataTables_Table_0"
+                                role="grid" aria-describedby="DataTables_Table_0_info">
+                                <thead>
+                                    <tr>
+                                        <th>Food Item</th>
+                                        <th>Price</th>
+                                        <th>Product ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Fri">
+                    <ng-template ngbTabContent>
+                        <div class="table-responsive">
+                            <table datatable="" class="table row-border table-hover dataTable" id="DataTables_Table_0"
+                                role="grid" aria-describedby="DataTables_Table_0_info">
+                                <thead>
+                                    <tr>
+                                        <th>Food Item</th>
+                                        <th>Price</th>
+                                        <th>Product ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Sat">
+                    <ng-template ngbTabContent>
+                        <div class="table-responsive">
+                            <table datatable="" class="table row-border table-hover dataTable" id="DataTables_Table_0"
+                                role="grid" aria-describedby="DataTables_Table_0_info">
+                                <thead>
+                                    <tr>
+                                        <th>Food Item</th>
+                                        <th>Price</th>
+                                        <th>Product ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                    <tr role="row">
+                                        <td>
+                                            Pizza
+                                        </td>
+                                        <td>
+                                            Rs 444.00
+                                        </td>
+                                        <td>
+                                            665588978
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+        </app-card>
+    </div>
+    <div class="col-sm-12">
+        <app-card cardTitle="Placed Orders" [options]="false">
+            <hr>
+            <div class="table-responsive">
+                <table datatable="" class="table table-hover m-b-0" id="DataTables_Table_0" role="grid"
+                    aria-describedby="DataTables_Table_0_info">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Order Name</th>
+                            <th>Customer Name</th>
+                            <th>Location</th>
+                            <th>Order Status</th>
+                            <th>Delivery Time</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr role="row">
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                Chicken Soup
+                            </td>
+                            <td>
+                                Harris Awan
+                            </td>
+                            <td>
+                                I-8 Markaz, Islamabad
+                            </td>
+                            <td>
+                                <div>
+                                    <label class="badge badge-light-warning">Pending</label>
+                                </div>
+                            </td>
+                            <td>
+                                23:45
+                            </td>
+                            <td>
+                                Rs 450.00
+                            </td>
+                        </tr>
+                        <tr role="row">
+                            <td>
+                                2
+                            </td>
+                            <td>
+                                Chicken Soup
+                            </td>
+                            <td>
+                                Harris Awan
+                            </td>
+                            <td>
+                                I-8 Markaz, Islamabad
+                            </td>
+                            <td>
+                                <div>
+                                    <label class="badge badge-light-danger">Cancelled</label>
+                                </div>
+                            </td>
+                            <td>
+                                23:45
+                            </td>
+                            <td>
+                                Rs 450.00
+                            </td>
+
+                        </tr>
+                        <tr role="row">
+                            <td>
+                                3
+                            </td>
+                            <td>
+                                Chicken Soup
+                            </td>
+                            <td>
+                                Harris Awan
+                            </td>
+                            <td>
+                                I-8 Markaz, Islamabad
+                            </td>
+                            <td>
+                                <div>
+                                    <label class="badge badge-light-warning">Pending</label>
+                                </div>
+                            </td>
+                            <td>
+                                23:45
+                            </td>
+                            <td>
+                                Rs 450.00
+                            </td>
+                        </tr>
+                        <tr role="row">
+                            <td>
+                                4
+                            </td>
+                            <td>
+                                Chicken Soup
+                            </td>
+                            <td>
+                                Harris Awan
+                            </td>
+                            <td>
+                                I-8 Markaz, Islamabad
+                            </td>
+                            <td>
+                                <div>
+                                    <label class="badge badge-light-success">Delivered</label>
+                                </div>
+                            </td>
+                            <td>
+                                23:45
+                            </td>
+                            <td>
+                                Rs 450.00
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </app-card>
+    </div>
+</div>

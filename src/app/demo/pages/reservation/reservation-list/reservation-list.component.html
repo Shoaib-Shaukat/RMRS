@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="col-xl-12">
+        <app-card [hidHeader]="true" blockClass="table-border-style">
+            <div class="" style="
+            display: inline-grid;
+        ">
+                <!-- <h4 class="float-left">orders</h4> -->
+                <h5 class="mb-3">Reservations</h5>
+                <button type="button" style="
+                right: 30px;
+                position: absolute;
+            " class="btn btn-icon btn-success float-right" (click)=addReservation()>ADD NEW
+                </button>
+            </div>
+            <hr>
+            <div class="table-responsive">
+                <table datatable="" class="table table-hover m-b-0" id="DataTables_Table_0" role="grid"
+                    aria-describedby="DataTables_Table_0_info">
+                    <thead>
+                        <tr>
+                            <th>Reserve ID</th>
+                            <th>Guests</th>
+                            <th>Customer Name</th>
+                            <th>Date&Time</th>
+                            <th>Status</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr role="row" *ngFor="let reservation of reservationList">
+                            <td>
+                                {{reservation.ReservationID}}
+                            </td>
+                            <td>
+                                {{reservation.NumberOfPeople}}
+                            </td>
+                            <td>
+                                {{reservation.CustomerName}}
+                            </td>
+                            <td>
+                                {{reservation.ReservationTime | date: 'medium' :'GMT+5:00'}}
+                            </td>
+                            <td>
+                                <div>
+                                    <label class="badge badge-light-warning">{{reservation.Status}}</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="overlay-edit text-center" >
+                                        <button type="button" class="btn btn-icon btn-danger"
+                                            (click)="rejectReservation(reservation.ReservationID)"
+                                            [hidden]="(reservation.Status != 'RESERVED')">Cancel</button>
+                                    </div>
+                                    <div class=" overlay-edit text-center">
+                                        <button type="button" class="btn btn-icon btn-success ml-1"
+                                            (click)="acceptReservationTwo(reservation.ReservationID)"
+                                            [hidden]="(reservation.Status != 'RESERVED')">Arrived</button>
+                                    </div>
+                                    <div class="overlay-edit text-center" >
+                                        <button type="button" class="btn btn-icon btn-danger"
+                                            (click)="rejectReservation(reservation.ReservationID)"
+                                            [hidden]="(reservation.Status != 'AWAITING_ACCEPTANCE')">Reject</button>
+                                    </div>
+                                    <div class=" overlay-edit text-center">
+                                        <button type="button" class="btn btn-icon btn-success ml-1"
+                                            (click)="acceptReservation(reservation.ReservationID)"
+                                            [hidden]="(reservation.Status != 'AWAITING_ACCEPTANCE')">Accept</button>
+                                    </div>
+                                </div>
+                                
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </app-card>
+    </div>
+</div>

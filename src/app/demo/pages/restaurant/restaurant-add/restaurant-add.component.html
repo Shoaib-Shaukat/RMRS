@@ -1,0 +1,677 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [hidHeader]="true" [options]="false">
+      <h5 *ngIf="editMode">Edit Restaurant</h5>
+      <hr>
+      <form action="javascript:" [formGroup]="restaurantAddForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputEmail4">Restaurant Name</label>
+            <input type="text" class="form-control" id="inputEmail4" placeholder="Name of Restaurant"
+              formControlName="RestaurantName" maxlength="70">
+            <div
+              *ngIf="(restaurantAddForm.controls['RestaurantName'].invalid && restaurantAddForm.controls['RestaurantName'].touched) || restaurantAddForm.controls['RestaurantName'].dirty"
+              class="text-left">
+              <small *ngIf="restaurantAddForm.controls['RestaurantName'].errors?.required" class="text-danger">Name of
+                Restaurant
+                is
+                required!</small>
+              <!--question mark(?) is a safe navigation operator-->
+              <small *ngIf="restaurantAddForm.controls['RestaurantName'].errors?.pattern" class="text-danger">Name
+                should be greater than 3 alphabets!</small>
+            </div>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="inputEmail4">KNTN</label>
+            <input type="number" class="form-control" id="inputEmail4" placeholder="KNTN Number" formControlName="NTN"
+              max="9">
+            <div
+              *ngIf="(restaurantAddForm.controls['NTN'].invalid && restaurantAddForm.controls['NTN'].touched) || restaurantAddForm.controls['NTN'].dirty"
+              class="text-left">
+              <small *ngIf="restaurantAddForm.controls['NTN'].errors?.required" class="text-danger">KNTN Number
+                is
+                required!</small>
+              <!--question mark(?) is a safe navigation operator-->
+              <small *ngIf="restaurantAddForm.controls['NTN'].errors?.pattern" class="text-danger">KNTN number should
+                contain 9 digits!</small>
+            </div>
+          </div>
+          <!-- <div class="form-group col-md-4">
+            <label for="inputEmail4">NTN Number / CNIC</label>
+            <input type="number" class="form-control" id="inputEmail4" placeholder="NTN Number / CNIC"
+              formControlName="CNICNo" maxlength="13" minlength="13">
+            <div
+              *ngIf="(restaurantAddForm.controls['CNICNo'].invalid && restaurantAddForm.controls['CNICNo'].touched) || restaurantAddForm.controls['CNICNo'].dirty"
+              class="text-left">
+              <small *ngIf="restaurantAddForm.controls['CNICNo'].errors?.required" class="text-danger">NTN or CNIC
+                Number is
+                required!</small>
+              <small *ngIf="restaurantAddForm.controls['CNICNo'].errors?.pattern" class="text-danger">CNIC should be of
+                13
+                Digits</small>
+            </div>
+          </div> -->
+          <!-- <div class="form-group col-md-4">
+              <label for="inputEmail4">WeekDay Timings</label>
+              <input type="text" class="form-control" id="inputEmail4" placeholder="Open Time" onfocus="(this.type='time')" formControlName="WeekdaysOpenTime">
+              <div
+                *ngIf="(restaurantAddForm.controls['WeekdaysOpenTime'].invalid && restaurantAddForm.controls['WeekdaysOpenTime'].touched) || restaurantAddForm.controls['WeekdaysOpenTime'].dirty"
+                class="text-left">
+                <small *ngIf="restaurantAddForm.controls['WeekdaysOpenTime'].errors?.required" class="text-danger">Open Time is
+                  required!</small>
+              </div>
+              <input type="text" class="form-control" placeholder="Close Time" onfocus="(this.type='time')" formControlName="WeekdaysCloseTime">
+              <div
+                *ngIf="(restaurantAddForm.controls['WeekdaysCloseTime'].invalid && restaurantAddForm.controls['WeekdaysCloseTime'].touched) || restaurantAddForm.controls['WeekdaysCloseTime'].dirty"
+                class="text-left">
+                <small *ngIf="restaurantAddForm.controls['WeekdaysCloseTime'].errors?.required" class="text-danger">Close Time is
+                  required!</small>
+              </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputEmail4">WeekEnd Timings</label>
+            <input type="text" class="form-control" id="inputEmail4" placeholder="Open Time" onfocus="(this.type='time')" formControlName="WeekendOpenTime">
+            <div
+              *ngIf="(restaurantAddForm.controls['WeekendOpenTime'].invalid && restaurantAddForm.controls['WeekendOpenTime'].touched) || restaurantAddForm.controls['WeekendOpenTime'].dirty"
+              class="text-left">
+              <small *ngIf="restaurantAddForm.controls['WeekendOpenTime'].errors?.required" class="text-danger">Open Time is
+                required!</small>
+            </div>
+            <input type="text" class="form-control" placeholder="Close Time" onfocus="(this.type='time')" formControlName="WeekendCloseTime">
+            <div
+              *ngIf="(restaurantAddForm.controls['WeekendCloseTime'].invalid && restaurantAddForm.controls['WeekendCloseTime'].touched) || restaurantAddForm.controls['WeekendCloseTime'].dirty"
+              class="text-left">
+              <small *ngIf="restaurantAddForm.controls['WeekendCloseTime'].errors?.required" class="text-danger">Close Time is
+                required!</small>
+            </div>
+        </div> -->
+          <div class="form-group col-md-4">
+            <label>Restaurant Category</label>
+            <select id="country" class="form-control" formControlName="RestaurantCategoryInfo"
+              (change)="getRestaurantCategory($event.target.value)">
+              <option value="">Select the Category</option>
+              <option *ngFor="let category of CategoryList" [value]="category.CategoryID + category.CategoryName"
+                [selected]="category.CategoryName == restaurantCategory">
+                {{category.CategoryName}}
+              </option>
+            </select>
+            <!-- <input type="text" class="form-control" 
+              formControlName="categoryName" maxlength="10" placeholder="Add New Category">
+              <button (click) = "addCategory()">ADD</button>
+              <p *ngIf = "this.DisplayMessage"> Added Successfully!</p> -->
+          </div>
+          <div class="form-group col-md-4">
+            <label>Restaurant Verified</label>
+            <select id="country" class="form-control" formControlName="RestaurantVerified">
+              <option value="False" [selected]="restaurantVerified == false">False</option>
+              <option value="True" [selected]="restaurantVerified == true">True</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputEmail4">Service Charges</label>
+            <input type="number" class="form-control" id="inputEmail4" placeholder="Service Charges"
+              formControlName="ServiceCharges" max="9">
+            <div
+              *ngIf="(restaurantAddForm.controls['ServiceCharges'].invalid && restaurantAddForm.controls['ServiceCharges'].touched) || restaurantAddForm.controls['ServiceCharges'].dirty"
+              class="text-left">
+              <small *ngIf="restaurantAddForm.controls['ServiceCharges'].errors?.required" class="text-danger">Service
+                Charges
+                is
+                required!</small>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputAddress">Address</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" placeholder="1234 Main St"
+              formControlName="Address" maxlength="250"></textarea>
+            <div
+              *ngIf="(restaurantAddForm.controls['Address'].invalid && restaurantAddForm.controls['Address'].touched) || restaurantAddForm.controls['Address'].dirty"
+              class="text-left">
+              <small *ngIf="restaurantAddForm.controls['Address'].errors?.required" class="text-danger">Address is
+                required!</small>
+              <!--question mark(?) is a safe navigation operator-->
+              <!-- <small *ngIf="forHolidays.errors?.pattern" class="text-danger">Should be days</small> -->
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Upload image</label>
+            <input type="file" #Image accept="image/*" formControlName="AttachImage"
+              (change)="handleFileInput($event.target.files); Uploadimage();"
+              [class.is-invalid]="restaurantAddForm.controls['AttachImage'].invalid && restaurantAddForm.controls['AttachImage'].touched"
+              required>
+            <div
+              *ngIf="(restaurantAddForm.controls['AttachImage'].invalid && restaurantAddForm.controls['AttachImage'].touched) || restaurantAddForm.controls['AttachImage'].dirty"
+              class="text-left">
+              <small *ngIf="restaurantAddForm.controls['AttachImage'].errors?.required" class="text-danger">Please
+                upload the
+                image</small>
+              <!--question mark(?) is a safe navigation operator-->
+            </div>
+          </div>
+          <div class="form-group col-md-12">
+            <h6>Optional</h6>
+            <hr>
+          </div>
+          <div class="form-group col-md-4">
+            <button class="btn btn-secondary" (click)="myLargeModalLabelDelivery.show()" style="margin-bottom: 5px;">Add
+              Delivery</button>
+            <div *ngIf="deliveryArr.length != 0">
+              <div class="table-responsive">
+                <table datatable="" class="table table-striped row-border table-hover dataTable" id="DataTables_Table_0"
+                  role="grid" aria-describedby="DataTables_Table_0_info">
+                  <thead>
+                    <tr>
+                      <th>Delivery Minutes</th>
+                      <th style="text-align: right;">Charges (Rs.)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr role="row" class="even">
+                      <td class="sorting_1">
+                        <div class="d-inline-block">
+                          <h6 class="m-b-0">{{deliveryArr.DeliveryTime}}</h6>
+                        </div>
+                      </td>
+                      <td style="text-align: right;">
+                        <div class="overlay-edit">
+                          <span class="text-right">{{deliveryArr.DeliveryCharges | number}}</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <button class="btn btn-secondary" (click)="myLargeModalLabelDiscount.show()" style="margin-bottom: 5px;">Add
+              Discount</button>
+            <div *ngIf="discountsArr.length > 0">
+              <div class="table-responsive">
+                <table datatable="" class="table table-striped row-border table-hover dataTable" id="DataTables_Table_0"
+                  role="grid" aria-describedby="DataTables_Table_0_info">
+                  <thead>
+                    <tr>
+                      <th>DISCOUNT Name</th>
+                      <th style="text-align: right;">DISCOUNT %</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr role="row" class="even" *ngFor="let eachDiscount of discountsArr">
+                      <td class="sorting_1">
+                        <div class="d-inline-block">
+                          <div class="d-inline-block">
+                            <h6 class="m-b-0">{{eachDiscount.DiscountName}}</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td style="text-align: right;">
+                        <div class="overlay-edit">
+                          <span class="text-right">{{eachDiscount.DiscountPercentage}}</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <button class="btn btn-secondary" (click)="myLargeModalLabelTimings.show()" style="margin-bottom: 5px;">Add
+              Timings</button>
+            <div *ngIf="Timings != undefined">
+              <div class="table-responsive">
+                <table datatable="" class="table table-striped row-border table-hover dataTable" id="DataTables_Table_0"
+                  role="grid" aria-describedby="DataTables_Table_0_info">
+                  <thead>
+                    <tr>
+                      <th>Days</th>
+                      <th>Start Time</th>
+                      <th>End Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr role="row" class="even" *ngFor="let eachDay of Timings">
+                      <td class="sorting_1">
+                        <div class="d-inline-block">
+                          <h6 class="m-b-0">{{eachDay.Day}}</h6>
+                        </div>
+                      </td>
+                      <td class="sorting_1" style="text-align: center;">
+                        <div class="d-inline-block">
+                          <span class="m-b-0">{{eachDay.StartTime}}</span>
+                        </div>
+                      </td>
+                      <td class="sorting_1" style="text-align: center;">
+                        <div class="d-inline-block">
+                          <span class="m-b-0">{{eachDay.EndTime}}</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="form-group col-md-4">
+            <label for="inputEmail4">Total Devices Connected</label>
+            <input type="number" class="form-control" id="inputEmail4" placeholder="Total number of Devices connected"
+              formControlName="TotalDevices">
+            <div
+              *ngIf="(restaurantAddForm.controls['TotalDevices'].invalid && restaurantAddForm.controls['TotalDevices'].touched) || restaurantAddForm.controls['TotalDevices'].dirty"
+              class="text-left">
+              <small *ngIf="restaurantAddForm.controls['TotalDevices'].errors?.required" class="text-danger">Total
+                number of Devices connected is required!</small>
+              <small *ngIf="restaurantAddForm.controls['TotalDevices'].errors?.pattern" class="text-danger">Only digits
+                are allowed and less than 100!</small>
+            </div>
+          </div> -->
+          <!-- <div class="form-group col-md-4">
+            <label for="inputEmail4">Holidays</label>
+            <input type="text" class="form-control" id="inputEmail4" placeholder="Holidays" formControlName="Holidays" maxlength="50">
+            <div
+              *ngIf="(restaurantAddForm.controls['Holidays'].invalid && restaurantAddForm.controls['Holidays'].touched) || restaurantAddForm.controls['Holidays'].dirty"
+              class="text-left">
+              <small *ngIf="restaurantAddForm.controls['Holidays'].errors?.required" class="text-danger">Holidays are
+                required!</small>
+            </div>
+          </div> -->
+          <!-- <div class="form-group col-md-4">
+            <label for="inputState">Menu Information</label>
+            <select id="inputState" class="form-control">
+              <option selected>select</option>
+              <option>Large select</option>
+            </select>
+          </div> -->
+          <!-- <div class="form-group col-md-4">
+            <label for="inputEmail4">Devices Connected</label>
+            <input type="text" class="form-control" id="inputEmail4" placeholder="Sales Tax Number"
+              formControlName="DevicesConnected" maxlength="30">
+            <div
+              *ngIf="(restaurantAddForm.controls['DevicesConnected'].invalid && restaurantAddForm.controls['DevicesConnected'].touched) || restaurantAddForm.controls['DevicesConnected'].dirty"
+              class="text-left">
+              <small *ngIf="restaurantAddForm.controls['DevicesConnected'].errors?.required" class="text-danger">Devices
+                Connected Info is
+                required!</small>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputEmail4">Registered Tablet Devices Information</label>
+            <input type="text" class="form-control" id="inputEmail4" formControlName="TabletInfo" maxlength="30">
+            <div
+              *ngIf="(restaurantAddForm.controls['TabletInfo'].invalid && restaurantAddForm.controls['TabletInfo'].touched) || restaurantAddForm.controls['TabletInfo'].dirty"
+              class="text-left">
+              <small *ngIf="restaurantAddForm.controls['TabletInfo'].errors?.required" class="text-danger">Tablet Info
+                is
+                required!</small>
+            </div>
+            <small>MAC-Address</small>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputEmail4"></label>
+            <input type="text" class="form-control" id="inputEmail4" formControlName="NameOfDevice" maxlength="20">
+            <div
+              *ngIf="(restaurantAddForm.controls['NameOfDevice'].invalid && restaurantAddForm.controls['NameOfDevice'].touched) || restaurantAddForm.controls['NameOfDevice'].dirty"
+              class="text-left">
+              <small *ngIf="restaurantAddForm.controls['NameOfDevice'].errors?.required" class="text-danger">Name of
+                Device is
+                required!</small>
+            </div>
+            <small>Name of device</small>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputEmail4"></label>
+            <input type="text" class="form-control" id="inputEmail4" formControlName="ModelOfDevice" maxlength="20">
+            <div
+              *ngIf="(restaurantAddForm.controls['ModelOfDevice'].invalid && restaurantAddForm.controls['ModelOfDevice'].touched) || restaurantAddForm.controls['ModelOfDevice'].dirty"
+              class="text-left">
+              <small *ngIf="restaurantAddForm.controls['ModelOfDevice'].errors?.required" class="text-danger">Model of
+                Device is
+                required!</small>
+            </div>
+            <small>Model of device</small>
+          </div> -->
+          <!-- <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="Checked">
+            <div
+              *ngIf="(restaurantAddForm.controls['Checked'].invalid && restaurantAddForm.controls['Checked'].touched) || restaurantAddForm.controls['Checked'].dirty"
+              class="text-left">
+              <small *ngIf="restaurantAddForm.controls['Checked'].errors?.required" class="text-danger">Should be
+                checked!</small>
+            </div>
+            <label class="form-check-label" for="exampleCheck1">I Agree to Term & Conditions</label>
+          </div> -->
+        </div>
+        <button type="submit" class="btn btn-primary float-right" *ngIf="!this.ADDorEDIT"
+          [disabled]="!restaurantAddForm.valid" [hidden] = "editMode == true">ADD</button>
+        <button type="submit" class="btn btn-primary float-right" *ngIf="this.ADDorEDIT" (click) = "updateRestaurant()"
+          [disabled]="!restaurantAddForm.valid" [hidden] = "editMode == false">SAVE CHANGES</button>
+        <button type="submit" class="btn btn-primary float-right" (click)=canceled()>CANCEL</button>
+      </form>
+    </app-card>
+  </div>
+
+</div>
+
+<app-ui-modal #myLargeModalLabelDiscount [dialogClass]="'modal-lg'">
+  <div class="app-modal-header">
+    <h5 class="modal-title">ADD DISCOUNT</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="myLargeModalLabelDiscount.hide()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="app-modal-body">
+    <form [formGroup]="addDiscountForm">
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="item-name">Discount Name</label>
+          <input type="text" class="form-control" id="itemName" contenteditable="true" formControlName="DiscountName"
+            maxlength="70"
+            [class.is-invalid]="addDiscountForm.controls['DiscountName'].invalid && addDiscountForm.controls['DiscountName'].touched"
+            required>
+          <div
+            *ngIf="(addDiscountForm.controls['DiscountName'].invalid && addDiscountForm.controls['DiscountName'].touched) || addDiscountForm.controls['DiscountName'].dirty"
+            class="text-left">
+            <small *ngIf="addDiscountForm.controls['DiscountName'].errors?.required" class="text-danger">Discount
+              Name is
+              required!</small>
+            <small *ngIf="addDiscountForm.controls['DiscountName'].errors?.pattern" class="text-danger">Enter
+              alphabets only
+              and atleast 3!</small>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputEmail4">Discount %</label>
+          <input type="number" maxlength="2" class="form-control" id="itemPrice" formControlName="DiscountPercentage"
+            [class.is-invalid]="addDiscountForm.controls['DiscountPercentage'].invalid && addDiscountForm.controls['DiscountPercentage'].touched"
+            required>
+          <div
+            *ngIf="(addDiscountForm.controls['DiscountPercentage'].invalid && addDiscountForm.controls['DiscountPercentage'].touched) || addDiscountForm.controls['DiscountPercentage'].dirty"
+            class="text-left">
+            <small *ngIf="addDiscountForm.controls['DiscountPercentage'].errors?.required" class="text-danger">Discount
+              %
+              is required!</small>
+            <small *ngIf="addDiscountForm.controls['DiscountPercentage'].errors?.pattern" class="text-danger">Enter
+              numbers only!</small>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+      (click)="myLargeModalLabelDiscount.hide()">CLOSE</button>
+    <button type="button" class="btn btn-primary" [disabled]="!addDiscountForm.valid"
+      (click)="addDiscountFormFunc(); myLargeModalLabelDiscount.hide()">ADD</button>
+  </div>
+</app-ui-modal>
+
+<app-ui-modal #myLargeModalLabelDelivery [dialogClass]="'modal-lg'">
+  <div class="app-modal-header">
+    <h5 class="modal-title">ADD DELIVERY</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="myLargeModalLabelDelivery.hide()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="app-modal-body">
+    <form [formGroup]="addDeliveryForm">
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="item-name">Minutes</label>
+          <input type="number" class="form-control" id="itemName" contenteditable="true" formControlName="DeliveryTime"
+            maxlength="70"
+            [class.is-invalid]="addDeliveryForm.controls['DeliveryTime'].invalid && addDeliveryForm.controls['DeliveryTime'].touched"
+            required>
+          <div
+            *ngIf="(addDeliveryForm.controls['DeliveryTime'].invalid && addDeliveryForm.controls['DeliveryTime'].touched) || addDeliveryForm.controls['DeliveryTime'].dirty"
+            class="text-left">
+            <small *ngIf="addDeliveryForm.controls['DeliveryTime'].errors?.required" class="text-danger">Delivery Time
+              is
+              required!</small>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputEmail4">Delivery Charges</label>
+          <input type="number" maxlength="2" class="form-control" id="itemPrice" formControlName="DeliveryCharges"
+            [class.is-invalid]="addDeliveryForm.controls['DeliveryCharges'].invalid && addDeliveryForm.controls['DeliveryCharges'].touched"
+            required>
+          <div
+            *ngIf="(addDeliveryForm.controls['DeliveryCharges'].invalid && addDeliveryForm.controls['DeliveryCharges'].touched) || addDeliveryForm.controls['DeliveryCharges'].dirty"
+            class="text-left">
+            <small *ngIf="addDeliveryForm.controls['DeliveryCharges'].errors?.required" class="text-danger">Delivery
+              Charges
+              is required!</small>
+            <small *ngIf="addDeliveryForm.controls['DeliveryCharges'].errors?.pattern" class="text-danger">Enter
+              numbers only!</small>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+      (click)="myLargeModalLabelDelivery.hide()">CLOSE</button>
+    <button type="button" class="btn btn-primary" [disabled]="!addDeliveryForm.valid"
+      (click)="addDeliveryFormFunc(); myLargeModalLabelDelivery.hide()">ADD</button>
+  </div>
+</app-ui-modal>
+
+<app-ui-modal #myLargeModalLabelTimings [dialogClass]="'modal-lg'">
+  <div class="app-modal-header">
+    <h5 class="modal-title">SET TIMINGS</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="myLargeModalLabelTimings.hide()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="app-modal-body">
+    <form [formGroup]="setTimingForm">
+      <div class="form-row">
+        <label for="item-name" class="form-group col-md-4">Days</label>
+        <label for="item-name" class="form-group col-md-4">Opening Time</label>
+        <label for="item-name" class="form-group col-md-4">Closing Time</label>
+        <hr>
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" id="itemName" contenteditable="true" maxlength="70" value="Monday"
+            readonly>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="time" class="form-control" id="itemName" contenteditable="true" formControlName="MondayStartTime"
+            maxlength="70"
+            [class.is-invalid]="setTimingForm.controls['MondayStartTime'].invalid && setTimingForm.controls['MondayStartTime'].touched"
+            required>
+          <div
+            *ngIf="(setTimingForm.controls['MondayStartTime'].invalid && setTimingForm.controls['MondayStartTime'].touched) || setTimingForm.controls['MondayStartTime'].dirty"
+            class="text-left">
+            <small *ngIf="setTimingForm.controls['MondayStartTime'].errors?.required" class="text-danger">Opening Time
+              required!</small>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="time" class="form-control" id="itemName" contenteditable="true" formControlName="MondayEndTime"
+            maxlength="70"
+            [class.is-invalid]="setTimingForm.controls['MondayEndTime'].invalid && setTimingForm.controls['MondayEndTime'].touched"
+            required>
+          <div
+            *ngIf="(setTimingForm.controls['MondayEndTime'].invalid && setTimingForm.controls['MondayEndTime'].touched) || setTimingForm.controls['MondayEndTime'].dirty"
+            class="text-left">
+            <small *ngIf="setTimingForm.controls['MondayEndTime'].errors?.required" class="text-danger">Closing Time
+              required!</small>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" id="itemName" contenteditable="true" maxlength="70" value="Tuesday"
+            readonly>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="time" class="form-control" id="itemName" contenteditable="true"
+            formControlName="TuesdayStartTime" maxlength="70"
+            [class.is-invalid]="setTimingForm.controls['TuesdayStartTime'].invalid && setTimingForm.controls['TuesdayStartTime'].touched"
+            required>
+          <div
+            *ngIf="(setTimingForm.controls['TuesdayStartTime'].invalid && setTimingForm.controls['TuesdayStartTime'].touched) || setTimingForm.controls['TuesdayStartTime'].dirty"
+            class="text-left">
+            <small *ngIf="setTimingForm.controls['TuesdayStartTime'].errors?.required" class="text-danger">Opening Time
+              required!</small>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="time" class="form-control" id="itemName" contenteditable="true" formControlName="TuesdayEndTime"
+            maxlength="70"
+            [class.is-invalid]="setTimingForm.controls['TuesdayEndTime'].invalid && setTimingForm.controls['TuesdayEndTime'].touched"
+            required>
+          <div
+            *ngIf="(setTimingForm.controls['TuesdayEndTime'].invalid && setTimingForm.controls['TuesdayEndTime'].touched) || setTimingForm.controls['TuesdayEndTime'].dirty"
+            class="text-left">
+            <small *ngIf="setTimingForm.controls['TuesdayEndTime'].errors?.required" class="text-danger">Closing Time
+              required!</small>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" id="itemName" contenteditable="true" maxlength="70" value="Wednesday"
+            readonly>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="time" class="form-control" id="itemName" contenteditable="true"
+            formControlName="WednesdayStartTime" maxlength="70"
+            [class.is-invalid]="setTimingForm.controls['WednesdayStartTime'].invalid && setTimingForm.controls['WednesdayStartTime'].touched"
+            required>
+          <div
+            *ngIf="(setTimingForm.controls['WednesdayStartTime'].invalid && setTimingForm.controls['WednesdayStartTime'].touched) || setTimingForm.controls['WednesdayStartTime'].dirty"
+            class="text-left">
+            <small *ngIf="setTimingForm.controls['WednesdayStartTime'].errors?.required" class="text-danger">Opening
+              Time
+              required!</small>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="time" class="form-control" id="itemName" contenteditable="true"
+            formControlName="WednesdayEndTime" maxlength="70"
+            [class.is-invalid]="setTimingForm.controls['WednesdayEndTime'].invalid && setTimingForm.controls['WednesdayEndTime'].touched"
+            required>
+          <div
+            *ngIf="(setTimingForm.controls['WednesdayEndTime'].invalid && setTimingForm.controls['WednesdayEndTime'].touched) || setTimingForm.controls['WednesdayEndTime'].dirty"
+            class="text-left">
+            <small *ngIf="setTimingForm.controls['WednesdayEndTime'].errors?.required" class="text-danger">Closing Time
+              required!</small>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" id="itemName" contenteditable="true" maxlength="70" value="Thursday"
+            readonly>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="time" class="form-control" id="itemName" contenteditable="true"
+            formControlName="ThursdayStartTime" maxlength="70"
+            [class.is-invalid]="setTimingForm.controls['ThursdayStartTime'].invalid && setTimingForm.controls['ThursdayStartTime'].touched"
+            required>
+          <div
+            *ngIf="(setTimingForm.controls['ThursdayStartTime'].invalid && setTimingForm.controls['ThursdayStartTime'].touched) || setTimingForm.controls['ThursdayStartTime'].dirty"
+            class="text-left">
+            <small *ngIf="setTimingForm.controls['ThursdayStartTime'].errors?.required" class="text-danger">Opening Time
+              required!</small>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="time" class="form-control" id="itemName" contenteditable="true" formControlName="ThursdayEndTime"
+            maxlength="70"
+            [class.is-invalid]="setTimingForm.controls['ThursdayEndTime'].invalid && setTimingForm.controls['ThursdayEndTime'].touched"
+            required>
+          <div
+            *ngIf="(setTimingForm.controls['ThursdayEndTime'].invalid && setTimingForm.controls['ThursdayEndTime'].touched) || setTimingForm.controls['ThursdayEndTime'].dirty"
+            class="text-left">
+            <small *ngIf="setTimingForm.controls['ThursdayEndTime'].errors?.required" class="text-danger">Closing Time
+              required!</small>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" id="itemName" contenteditable="true" maxlength="70" value="Friday"
+            readonly>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="time" class="form-control" id="itemName" contenteditable="true" formControlName="FridayStartTime"
+            maxlength="70"
+            [class.is-invalid]="setTimingForm.controls['FridayStartTime'].invalid && setTimingForm.controls['FridayStartTime'].touched"
+            required>
+          <div
+            *ngIf="(setTimingForm.controls['FridayStartTime'].invalid && setTimingForm.controls['FridayStartTime'].touched) || setTimingForm.controls['FridayStartTime'].dirty"
+            class="text-left">
+            <small *ngIf="setTimingForm.controls['FridayStartTime'].errors?.required" class="text-danger">Opening Time
+              required!</small>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="time" class="form-control" id="itemName" contenteditable="true" formControlName="FridayEndTime"
+            maxlength="70"
+            [class.is-invalid]="setTimingForm.controls['FridayEndTime'].invalid && setTimingForm.controls['FridayEndTime'].touched"
+            required>
+          <div
+            *ngIf="(setTimingForm.controls['FridayEndTime'].invalid && setTimingForm.controls['FridayEndTime'].touched) || setTimingForm.controls['FridayEndTime'].dirty"
+            class="text-left">
+            <small *ngIf="setTimingForm.controls['FridayEndTime'].errors?.required" class="text-danger">Closing Time
+              required!</small>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" id="itemName" contenteditable="true" maxlength="70" value="Saturday"
+            readonly>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="time" class="form-control" id="itemName" contenteditable="true"
+            formControlName="SaturdayStartTime" maxlength="70"
+            [class.is-invalid]="setTimingForm.controls['SaturdayStartTime'].invalid && setTimingForm.controls['SaturdayStartTime'].touched"
+            required>
+          <div
+            *ngIf="(setTimingForm.controls['SaturdayStartTime'].invalid && setTimingForm.controls['SaturdayStartTime'].touched) || setTimingForm.controls['SaturdayStartTime'].dirty"
+            class="text-left">
+            <small *ngIf="setTimingForm.controls['SaturdayStartTime'].errors?.required" class="text-danger">Opening Time
+              required!</small>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="time" class="form-control" id="itemName" contenteditable="true" formControlName="SaturdayEndTime"
+            maxlength="70"
+            [class.is-invalid]="setTimingForm.controls['SaturdayEndTime'].invalid && setTimingForm.controls['SaturdayEndTime'].touched"
+            required>
+          <div
+            *ngIf="(setTimingForm.controls['SaturdayEndTime'].invalid && setTimingForm.controls['SaturdayEndTime'].touched) || setTimingForm.controls['SaturdayEndTime'].dirty"
+            class="text-left">
+            <small *ngIf="setTimingForm.controls['SaturdayEndTime'].errors?.required" class="text-danger">Closing Time
+              required!</small>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" id="itemName" contenteditable="true" maxlength="70" value="Sunday"
+            readonly>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="time" class="form-control" id="itemName" contenteditable="true" formControlName="SundayStartTime"
+            maxlength="70"
+            [class.is-invalid]="setTimingForm.controls['SundayStartTime'].invalid && setTimingForm.controls['SundayStartTime'].touched"
+            required>
+          <div
+            *ngIf="(setTimingForm.controls['SundayStartTime'].invalid && setTimingForm.controls['SundayStartTime'].touched) || setTimingForm.controls['SundayStartTime'].dirty"
+            class="text-left">
+            <small *ngIf="setTimingForm.controls['SundayStartTime'].errors?.required" class="text-danger">Opening Time
+              required!</small>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <input type="time" class="form-control" id="itemName" contenteditable="true" formControlName="SundayEndTime"
+            maxlength="70"
+            [class.is-invalid]="setTimingForm.controls['SundayEndTime'].invalid && setTimingForm.controls['SundayEndTime'].touched"
+            required>
+          <div
+            *ngIf="(setTimingForm.controls['SundayEndTime'].invalid && setTimingForm.controls['SundayEndTime'].touched) || setTimingForm.controls['SundayEndTime'].dirty"
+            class="text-left">
+            <small *ngIf="setTimingForm.controls['SundayEndTime'].errors?.required" class="text-danger">Closing Time
+              required!</small>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+      (click)="myLargeModalLabelTimings.hide()">CLOSE</button>
+    <button type="button" class="btn btn-primary"
+      (click)="setTimingsFunc(); myLargeModalLabelTimings.hide()">SET</button>
+  </div>
+</app-ui-modal>

@@ -1,0 +1,87 @@
+<!-- Start Signup Area -->
+<section class="signup-area">
+    <div class="row m-0">
+        <div class="col-lg-6 col-md-12 p-0">
+            <div class="signup-content">
+                <div class="d-table">
+                    <div class="d-table-cell">
+                        <div class="signup-form">
+                            <app-card [hidHeader]="true" cardClass="text-center">
+                                <h5 class="card-title">Enter OTP</h5>
+                                <p class="card-text">We have sent you an SMS with a code to email
+                                    aswadhassan@teletaleem.com</p>
+                                <!-- <form action="javascript:" class="form-inline">
+                                    <div class="form-group  mr-3 mb-2">
+                                        <input type="number" class="form-control round-box" id="inputnumber"
+                                            placeholder="">
+                                    </div>
+                                    <div class="form-group  mr-3 mb-2">
+                                        <input type="number" class="form-control round-box" id="inputnumber"
+                                            placeholder="">
+                                    </div>
+                                    <div class="form-group  mr-3 mb-2">
+                                        <input type="number" class="form-control round-box" id="inputnumber"
+                                            placeholder="">
+                                    </div>
+                                    <div class="form-group  mr-3 mb-2">
+                                        <input type="number" class="form-control round-box" id="inputnumber"
+                                            placeholder="">
+                                    </div>
+                                    <div class="form-group  mr-3 mb-2">
+                                        <input type="number" class="form-control round-box" id="inputnumber"
+                                            placeholder="">
+                                    </div>
+                                    <div class="form-group  mr-3 mb-2">
+                                        <input type="number" class="form-control round-box" id="inputnumber"
+                                            placeholder="">
+                                    </div>
+                                </form> -->
+                                <form action="javascript:" class="form-inline">
+                                    <div class="d-flex flex-row mt-4">
+                                        <input type="text" class="Ellipse-16" autofocus="" maxlength="1"
+                                            [(ngModel)]="otp1" [ngModelOptions]="{standalone: true}"
+                                            (keyup)="keytab($event)">
+                                        <input type="text" class="Ellipse-16" maxlength="1" [(ngModel)]="otp2"
+                                            [ngModelOptions]="{standalone: true}" (keyup)="keytab($event)">
+                                        <input type="text" class="Ellipse-16" maxlength="1" [(ngModel)]="otp3"
+                                            [ngModelOptions]="{standalone: true}" (keyup)="keytab($event)">
+                                        <input type="text" class="Ellipse-16" maxlength="1" [(ngModel)]="otp4"
+                                            [ngModelOptions]="{standalone: true}" (keyup)="keytab($event)">
+                                        <input type="text" class="Ellipse-16" maxlength="1" [(ngModel)]="otp5"
+                                            [ngModelOptions]="{standalone: true}" (keyup)="keytab($event)">
+                                        <input type="text" class="Ellipse-16" maxlength="1" [(ngModel)]="otp6"
+                                            [ngModelOptions]="{standalone: true}" (keyup)="keytab($event)">
+                                    </div>
+                                </form>
+                                <p class="card-text">Don't you received any code?</p>
+                                <div>
+                                    <p class="mb-0 text-muted">Resend Code</p>
+                                </div>
+                                <button type="submit" class="btn btn-primary" [routerLink]="['/dashboard/analytics']">Register</button>
+                            </app-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-12 p-0">
+            <div class="signup-image">
+                <img src="assets/images/auth/image.png" alt="image">
+                <div class="signup-content">
+                    <div class="d-table">
+                        <div class="d-table-cell">
+                            <h3 class="text-white pl-4 pr-4">
+                                Lorem ipsum dolor sit amet, dolor.
+                                Qum sociis natoque penatibus et ma gnis dis parturient montes
+                            </h3>
+                            <div class="mt-4 pl-4 col-md-3">
+                                <ngb-progressbar type="primary" height="6px" [value]="100"></ngb-progressbar>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Login Area -->

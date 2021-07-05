@@ -1,0 +1,109 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "scss/style";
+@import '~ngx-bar-rating/themes/br-default-theme';
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #3a7b22;
+    margin-bottom: 5px;
+}
+.nav-pills .nav-link {
+    border-radius: 5px;
+    border: solid 1px rgba(156, 156, 156, 0.5);
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+.form-control {
+    background-color: #f5fafe;
+    margin-top: 5px;
+}
+
+/*================================================
+Signup Area CSS
+=================================================*/
+.signup-image {
+    height: 100%;
+    width: 100%;
+    background: {
+        // image: url(../../../../../assets/images/auth/image.png);
+        image: url(../src/assets/images/auth/image.png);
+        position: center center;
+        size: cover;
+        repeat: no-repeat;
+    }
+    img {
+        display: none;
+    }
+}
+.signup-content {
+    height: 100vh;
+
+    .signup-form {
+        text-align: center;
+        max-width: 500px;
+        margin: {
+            left: auto;
+            right: auto;
+        }
+        .logo {
+            margin-bottom: 35px;
+
+            a {
+                display: inline-block;
+            }
+        }
+        h3 {
+            margin-bottom: 0;
+            font: {
+                size: 30px;
+                weight: 600;
+            }
+        }
+        p {
+            margin: {
+                top: 7px;
+                bottom: 0;
+            }
+        }
+        form {
+            margin-top: 35px;
+        }
+    }
+}
+
+.d-table {
+    width: 100%;
+    height: 100%;
+
+    &-cell {
+        vertical-align: middle;
+    }
+}
+.btn-primary,
+.btn-primary:disabled {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #5cb85c;
+    width: 140px;
+    margin: 5px;
+}
+.app-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 14px;
+}
+.feather {
+    cursor: pointer;
+}
+.circle-btn-icon {
+    border-radius: 50%;
+    margin: 0 3px;
+    width: 35px;
+    height: 35px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}

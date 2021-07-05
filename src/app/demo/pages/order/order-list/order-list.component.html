@@ -1,0 +1,88 @@
+<div class="row">
+    <div class="col-xl-12">
+        <app-card [hidHeader]="true" blockClass="table-border-style">
+            <div class="" style="
+            display: inline-grid;
+        ">
+                <!-- <h4 class="float-left">orders</h4> -->
+                <h5 class="mb-3">Orders</h5>
+                <button type="button" (click)="clickedButton($event)" style="
+                right: 150px;
+                position: absolute;
+            " class="btn btn-icon btn-success float-right" [routerLink]="['/order/order-history']">History
+                </button>
+                <button type="button" (click)="clickedButton($event)" [hidden] = "takeOrder == false" style="
+                    right: 30px;
+                    position: absolute;
+                " class="btn btn-icon btn-success float-right" [routerLink]="['/pos']">Take
+                    Order</button>
+            </div>
+            <hr>
+            <div class="table-responsive">
+                <table datatable="" class="table table-hover m-b-0" id="DataTables_Table_0" role="grid"
+                    aria-describedby="DataTables_Table_0_info">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Order Date</th>
+                            <th>Customer Name</th>
+                            <th>Order Status</th>
+                            <th style="text-align: right;">Total Amount(Rs.)</th>
+                            <th style="width: 200px;"></th>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr role="row" *ngFor="let order of orderList; trackBy: countOrders()">
+                            <td *ngIf="order.Status != 'PAYMENT_MADE'">
+                                {{order.OrderID}}
+                            </td>
+                            <td *ngIf="order.Status != 'PAYMENT_MADE'">
+                                {{order.OrderDate | date: 'medium' :'GMT+5:00'}}
+                            </td>
+                            <td *ngIf="order.Status != 'PAYMENT_MADE'">
+                                {{order.CustomerName}}
+                            </td>
+
+
+
+                            <td *ngIf="order.Status != 'PAYMENT_MADE'">
+                                <div>
+                                    <label *ngIf="order.Status == 'NEW_ORDER'"
+                                        class="badge badge-light-info">{{order.Status}}</label>
+                                    <label *ngIf="order.Status == 'IN_QUEUE'"
+                                        class="badge badge-light-warning">{{order.Status}}</label>
+                                </div>
+                            </td>
+                            <td style="text-align: right;" *ngIf="order.Status != 'PAYMENT_MADE'">
+                                {{order.TotalAmount | number}}
+                            </td>
+                            <td *ngIf="order.Status != 'PAYMENT_MADE'">
+                                <div class="overlay-edit">
+                                    <button type="button" class="btn btn-icon btn-info circle-btn-icon" title="Edit Order" [hidden] = "orderEdit == false"
+                                        style="cursor: pointer;" (click)="editOrder(order.OrderID)"><i class="feather icon-edit"></i></button>
+                                    <button type="button" class="btn btn-icon btn-secondary circle-btn-icon"
+                                        (click)="viewOrder(order.OrderID)" title="View order details" [hidden] = "orderView == false"><i
+                                            class="feather icon-eye"></i></button>
+                                    <button type="button" class="btn btn-icon btn-success circle-btn-icon"
+                                        (click)="acceptOrder(order.OrderID)"
+                                        [hidden]="(order.Status == 'IN_QUEUE') || (order.Status == 'PAYMENT_MADE')"><i
+                                            class="feather icon-check-circle" title="Accept order" [hidden] = "orderAccept == false"></i></button>
+                                </div>
+                            </td>
+                            <!-- <td *ngIf="order.Status != 'PAYMENT_MADE'">
+                                <div class="overlay-edit text-center">
+                                    <button type="button" class="btn btn-icon btn-success circle-btn-icon"
+                                        (click)="acceptOrder(order.OrderID)"
+                                        [hidden]="(order.Status == 'IN_QUEUE') || (order.Status == 'PAYMENT_MADE')"><i
+                                            class="feather icon-check-circle" title="Accept order"></i></button>
+                                </div>
+                            </td> -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </app-card>
+    </div>
+</div>

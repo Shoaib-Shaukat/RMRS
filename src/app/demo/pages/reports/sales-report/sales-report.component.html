@@ -1,0 +1,122 @@
+<div class="row">
+    <div class="col-sm-12">
+        <app-card cardTitle="Sale reports" [options]="false">
+
+            <h5 class="mt-1">Search filter</h5>
+            <hr>
+            <form action="javascript:" [formGroup]="serachDateSalesForm">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="inputEmail4">Start date</label>
+                        <input type="datetime-local" class="form-control" id="inputEmail4" placeholder="Email"
+                            formControlName="StartDate">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputPassword4">End date</label>
+                        <input type="datetime-local" class="form-control" id="inputPassword4" placeholder="Password"
+                            formControlName="EndDate">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="form-check">
+                            <label for="inputPassword4" style="visibility: hidden;">Today</label>
+                            <input class="form-check-input" type="checkbox" id="gridCheck" (change)="isToday($event)">
+                            <label class="form-check-label" for="gridCheck">Today</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary float-right" (click)=searchReport()>Search</button>
+            </form>
+        </app-card>
+        <app-card *ngIf="TotalOfSalesReport.length != 0" cardTitle="Sale reports" [hidHeader]="true" [options]="false"
+            [hidden]="!ReportsAvailable">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="4" scope="col" class="text-center">
+                            <h3>{{RestaurantName}}</h3>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center" colspan="4">Sales Report of Today</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Transactions:</td>
+                        <td colspan="2" class="text-right">{{transaction}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Subtotal:</td>
+                        <td colspan="2" class="text-right">{{TotalOfSalesReport.gross | number}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Tax:</td>
+                        <td colspan="2" class="text-right">{{TotalOfSalesReport.gst | number}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Total:</td>
+                        <td colspan="2" class="text-right">{{TotalOfSalesReport.grossWithGST | number}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </app-card>
+        <!-- <button type="submit" class="btn btn-primary float-left" [class.active]="showReportDetail == true"
+            (click)=showDetail()>Show Detail</button>
+        <button type="submit" class="btn btn-primary float-left" [class.active]="hideReportDetail == true"
+            (click)=hideDetail()>Hide Detail</button> -->
+        <app-card *ngIf="TotalOfSalesReport.length != 0" cardTitle="Sale reports" [hidHeader]="true" [options]="false"
+            [hidden]="!ReportsAvailable">
+            <table datatable="" class="table table-striped row-border table-hover dataTable" id="DataTables_Table_0"
+                role="grid" aria-describedby="DataTables_Table_0_info">
+                <thead>
+                    <th style="text-align: center;">ID</th>
+                    <th style="text-align: center;">Invoice ID</th>
+                    <th style="text-align: right;">SubTotal</th>
+                    <th style="text-align: right;">Tax</th>
+                    <th style="text-align: right;">Total</th>
+                </thead>
+                <tbody *ngFor="let report of SalesReport;let i = index">
+                    <td style="text-align: right;">
+                        <span>{{i+1}}</span>
+                    </td>
+                    <td style="text-align: center;">
+                        <span>{{report.InvoiceID}}</span>
+                    </td>
+                    <td style="text-align: right;">
+                        <span>{{report.SubTotal | number}}</span>
+                    </td>
+                    <td style="text-align: right;">
+                        <span>{{report.SalesTax | number}}</span>
+                    </td>
+                    <td style="text-align: right;"> 
+                        <span>{{report.TotalAmount | number}}</span>
+                    </td>
+                    <!-- <tr>
+                        <td class="text-center" colspan="4">Order Type Wise</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="text-right">Bills</td>
+                        <td>Sale</td>
+                        <td class="text-right">Avg. Check</td>
+                    </tr>
+                    <tr>
+                        <td>Dine In</td>
+                        <td class="text-right">44</td>
+                        <td>118324</td>
+                        <td class="text-right">2678.00</td>
+                    </tr>
+                    <tr>
+                        <td>Take Away</td>
+                        <td class="text-right">15</td>
+                        <td>118324</td>
+                        <td class="text-right">2078.00</td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </app-card>
+        <h6 *ngIf="Description == 'No Record Found'">{{Description}}</h6>
+    </div>
+
+</div>

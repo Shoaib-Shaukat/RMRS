@@ -1,0 +1,21 @@
+input.ng-invalid.ng-dirty{
+    border-bottom-color: #e91e63 !important;
+    box-shadow: 0 1px 0 0 #e91e63 !important; 
+}
+.btn-primary{
+    color: #fff;
+    background-color: #5CB85C;
+    border-color: #5CB85C;
+    width: 180px;
+    margin: 5px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.btn-secondary {
+    color: #000;
+    background-color: #efefef;
+    border-color: #A4A4A4;
+}

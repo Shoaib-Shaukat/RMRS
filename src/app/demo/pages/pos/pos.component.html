@@ -1,0 +1,394 @@
+<div class="row">
+    <div class="col-sm-6">
+        <app-card cardTitle="Add menu by ID">
+            <form action="javascript:" [formGroup]="searchItemForm">
+                <div class="row">
+                    <div class="form-group mb-2">
+                        <!-- <label for="inputEmail4">Enter Ref ID</label> -->
+                        <input type="text" class="form-control" placeholder="Enter menu code" contenteditable="true"
+                            list="categories" formControlName="RefID" maxlength="100"
+                            [class.is-invalid]="searchItemForm.controls['RefID'].invalid && searchItemForm.controls['RefID'].touched"
+                            (change)="showNameOfItem($event.target.value); showDealName($event.target.value);" required>
+                        <datalist id="categories">
+                            <option *ngFor="let item of allitemsList" value="{{item.RefID}}"></option>
+                            <option *ngFor="let Deal of ListofDeals" value="{{Deal.DealID}}"></option>
+                        </datalist>
+                        <div *ngIf="(searchItemForm.controls['RefID'].invalid && searchItemForm.controls['RefID'].touched) || searchItemForm.controls['RefID'].dirty"
+                            class="text-left">
+                            <small *ngIf="searchItemForm.controls['RefID'].errors?.required" class="text-danger">RefID
+                                is required!</small>
+                            <!--question mark(?) is a safe navigation operator-->
+                            <small *ngIf="searchItemForm.controls['RefID'].errors?.pattern" class="text-danger">Enter
+                                alphabets only
+                                and atleast 3!</small>
+                        </div>
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <!-- <label for="inputEmail4">Item Quantity</label> -->
+                        <input type="number" class="form-control" placeholder="Item Quantity"
+                            formControlName="ItemQuantity" max="2"
+                            [class.is-invalid]="searchItemForm.controls['ItemQuantity'].invalid && searchItemForm.controls['ItemQuantity'].touched"
+                            required>
+                        <div *ngIf="(searchItemForm.controls['ItemQuantity'].invalid && searchItemForm.controls['ItemQuantity'].touched) || searchItemForm.controls['ItemQuantity'].dirty"
+                            class="text-left">
+                            <small *ngIf="searchItemForm.controls['ItemQuantity'].errors?.required"
+                                class="text-danger">Quantity
+                                of Item is
+                                required!</small>
+                        </div>
+                    </div>
+                    <div class="overlay-edit text-center">
+                        <button type="button" class="btn btn-primary mb-2"
+                            (click)="addItemDirectly(); Subtotal(); salestax();"
+                            [disabled]="!searchItemForm.valid">ADD</button>
+                    </div>
+                    <div class="form-group mb-2">
+                        <div [hidden]="NameofItemForDirectAdd == 'NoItemSelected'">
+                            <input type="text" class="form-control" contenteditable="true" list="categories"
+                                formControlName="RefID" maxlength="100" [value]="searchItemForm.controls['RefID']"
+                                value="{{NameofItemForDirectAdd}}" readonly>
+
+                        </div>
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <select class="form-control" id="exampleFormControlSelect1" [hidden]="VariantsArray.length == 0"
+                            formControlName="itemVariantName">
+                            <option>Select Variant</option>
+                            <option *ngFor="let variant of VariantsArray">
+                                {{variant.ItemName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </app-card>
+    </div>
+    <div class="col-sm-6">
+        <app-card cardTitle="Customer details">
+            <form action="javascript:" [formGroup]="CustomerForm" class="form-inline">
+                <div class="row">
+                    <p *ngIf="response">
+                        <span *ngIf="successResponse" class="text-success">{{description}}
+                            <span class="text-dark">({{customerName}})</span>
+                        </span>
+                        <span *ngIf="failResponse" class="text-danger">{{description}}</span>
+                    </p>
+                    <br>
+                    <p>
+                        <small *ngIf="CustomerForm.controls['CustomerNumber'].errors?.pattern" class="text-danger">
+                            (Mobile Number should
+                            contain 11 digits!)</small>
+                    </p>
+
+                    <div class="form-row">
+                        <div class="input-group col-md-6 mb-2">
+                            <input type="number" class="form-control col-md-12" placeholder="Enter Customer No."
+                                aria-label="" aria-describedby="basic-addon1" formControlName="CustomerNumber">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-secondary" type="button" (click)="verifyCustomer()"
+                                    [disabled]="!CustomerForm.valid">Verify</button>
+                            </div>
+                        </div>
+                        <!-- <div class="form-group col-md-6 mb-2">
+                            <input type="number" class="form-control col-md-12" id="exampleFormControlSelect1"
+                                placeholder="Enter Customer No." formControlName="CustomerNumber"
+                                contenteditable="true">
+                            <button type="button" class="btn verify mb-2" (click)="verifyCustomer()"
+                                [disabled]="!CustomerForm.valid">Verify</button>
+
+                        </div> -->
+                        <div class="form-group col-md-6 mb-2">
+                            <!-- <label for="exampleFormControlSelect1">Example select</label> -->
+                            <select class="form-control col-md-12" id="exampleFormControlSelect1"
+                                (change)="setOrderType($event.target.value)" formControlName="orderType">
+                                <option value="" selected disabled hidden>Order Type</option>
+                                <option value="Dine In">Dine in</option>
+                                <option value="Take Away">Take Away</option>
+                                <option value="Online Delivery">Online Delivery</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6 mb-2">
+                            <!-- <label for="exampleFormControlSelect1">Example select</label> -->
+                            <select class="form-control col-md-12" id="exampleFormControlSelect1">
+                                <option value="" selected disabled hidden>Select waiter</option>
+                                <option *ngFor="let eachStaff of StaffList">{{eachStaff.StaffName}} </option>
+                            </select>
+                        </div>
+                        <!-- <div class="form-group col-md-6 mb-2">
+                            <select class="form-control col-md-12" id="exampleFormControlSelect1">
+                                <option>Select table #</option>
+                                <option *ngFor="let eachTable of TableList">{{eachTable.TableName}} </option>
+                            </select>
+                        </div> -->
+                        <div class="form-group col-md-6 mb-2">
+                            <select class="form-control col-md-12" id="exampleFormControlSelect1"
+                                formControlName="discountName">
+                                <option value="" selected disabled hidden>Select Discount</option>
+                                <option *ngFor="let eachDiscount of discountsArr">{{eachDiscount.DiscountName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </app-card>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-8">
+        <app-card [hidHeader]="true" cardClass="tab-card">
+            <h6 class="mb-3">Food items</h6>
+            <ngb-tabset type="pills">
+                <ngb-tab title="All" class="mb-3">
+                    <ng-template ngbTabContent>
+                        <div class="row">
+                            <div *ngFor="let item of allitemsList" style="
+                            display: contents;
+                        ">
+                                <ng-container *ngIf="item.isVariant == false">
+                                    <div class="form-group col-md-3">
+                                        <div class="cards" style="cursor: pointer;"
+                                            (click)="addInCart(item.RefID); Subtotal(); salestax();">
+                                            <img src={{item.Image}} alt="user image" class="img-radius-of-pos">
+                                            <p class="text-center">{{item.MenuName}}</p>
+                                            <p class="Price">{{item.CalculatedPrice | number}}</p>
+                                        </div>
+                                        <select class="form-control col-md-11" id="exampleFormControlSelect1"
+                                            [disabled]="true" style="appearance: none;">
+                                            <option>No Variant</option>
+                                        </select>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="item.isVariant == true">
+                                    <div class="form-group col-md-3">
+                                        <div class="cards" style="cursor: pointer;"
+                                            (click)="addInCart(item.RefID); Subtotal(); salestax();">
+                                            <img src={{item.Image}} alt="user image" class="img-radius-of-pos">
+                                            <p class="text-center">{{item.MenuName}}</p>
+                                            <p class="Price">{{item.CalculatedPrice | number}}</p>
+                                        </div>
+                                        <select class="form-control col-md-11" id="exampleFormControlSelect1"
+                                            (change)="selectedVariantPrice($event.target.value)">
+                                            <option>Select Variant</option>
+                                            <option *ngFor="let eachvariantvalue of item.Variant"
+                                                [value]="item.RefID + '/' + eachvariantvalue.VariantID + '/' + eachvariantvalue.CalculatedPrice">
+                                                {{eachvariantvalue.ItemName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <div *ngFor="let Deal of ListofDeals" style="
+                            display: contents;
+                        ">
+                                <div class="form-group col-md-3">
+                                    <div class="cards" style="cursor: pointer;"
+                                        (click)="addDeal(Deal.DealID); Subtotal(); salestax();">
+                                        <img src={{Deal.Image}} alt="user image" class="img-radius-of-pos">
+                                        <p class="text-center">{{Deal.DealName}}</p>
+                                        <p class="Price">{{Deal.DealPrice | number}}</p>
+                                    </div>
+                                    <select class="form-control col-md-11" id="exampleFormControlSelect1"
+                                        [disabled]="true" style="appearance: none;">
+                                        <option>No Variant</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="{{category.CategoryName}}" class="mb-3" *ngFor="let category of menuCategoryList">
+                    <ng-template ngbTabContent>
+                        <div class="row">
+                            <div *ngFor="let item of allitemsList" style="
+                            display: contents;
+                        ">
+                                <ng-container *ngIf="item.isVariant == false">
+                                    <div class="form-group col-md-3" *ngIf="item.MenuCategory == category.CategoryName">
+                                        <div class="cards" (click)="addInCart(item.RefID); Subtotal(); salestax();">
+                                            <img src={{item.Image}} alt="user image" class="img-radius-of-pos">
+                                            <p class="text-center">{{item.MenuName}}</p>
+                                            <p class="Price">{{item.CalculatedPrice | number}}</p>
+                                        </div>
+                                        <select class="form-control col-md-11" id="exampleFormControlSelect1"
+                                            [disabled]="true" style="appearance: none;">
+                                            <option>No Variant</option>
+                                        </select>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="item.isVariant == true">
+                                    <div class="form-group col-md-3" *ngIf="item.MenuCategory == category.CategoryName">
+                                        <div class="cards" (click)="addInCart(item.RefID); Subtotal(); salestax();">
+                                            <img src={{item.Image}} alt="user image" class="img-radius-of-pos">
+                                            <p class="text-center">{{item.MenuName}}</p>
+                                            <p class="Price">{{item.CalculatedPrice | number}}</p>
+                                        </div>
+                                        <select class="form-control col-md-11" id="exampleFormControlSelect1"
+                                            (change)="selectedVariantPrice($event.target.value)">
+                                            <option>Select Variant</option>
+                                            <option *ngFor="let eachvariantvalue of item.Variant"
+                                                [value]="item.RefID + '/' + eachvariantvalue.VariantID + '/' + eachvariantvalue.CalculatedPrice">
+                                                {{eachvariantvalue.ItemName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Deals" class="mb-3">
+                    <ng-template ngbTabContent>
+                        <div class="row">
+                            <div *ngFor="let Deal of ListofDeals" style="
+                            display: contents;
+                        ">
+                                <div class="form-group col-md-3">
+                                    <div class="cards" (click)="addDeal(Deal.DealID); Subtotal(); salestax();">
+                                        <img src={{Deal.Image}} alt="user image" class="img-radius-of-pos">
+                                        <p class="text-center">{{Deal.DealName}}</p>
+                                        <p class="Price ml-3 mr-3">{{Deal.DealPrice | number}}</p>
+                                    </div>
+                                    <select class="form-control col-md-11" id="exampleFormControlSelect1"
+                                        [disabled]="true" style="appearance: none;">
+                                        <option>No Variant</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+        </app-card>
+    </div>
+    <div class="col-md-4">
+
+        <app-card cardTitle="Your Order" id="order">
+            <!-- <h5 class="">Your Order</h5> -->
+
+
+
+            <div *ngIf="this.salesTax != 0">
+                <div class="row">
+                    <div class="col-md-7 text-left">Items</div>
+                    <div class="col-md-2 p-0">Qty</div>
+                    <div class="col-md-3 text-right">Rate</div>
+                </div>
+
+                <hr>
+                <div *ngFor="let info of displayItems" class="mb-2">
+                    <ng-container *ngIf="info.isVariant == false">
+                        <div class="">
+
+                            <div class="row" *ngIf="info.Quantity > 0">
+                                <i class="feather icon-trash-2 col-md-1 text-c-red"
+                                    (click)="deleteItemNoVariant(info.RefID)"></i>
+                                <div class="col-md-5 p-0">{{info.NameofItem}}
+                                </div>
+                                <div class="col-md-3" *ngIf="this.itemInBill">
+                                    <span class="badge badge-light-danger col-md-3" style="cursor: pointer;"
+                                        (click)=" minusQtyItemNoVariant(info.RefID); Subtotal(); salestax();">-</span>
+                                    <span class="col-md-3">{{info.Quantity}}</span>
+                                    <span class="badge badge-light-success col-md-3" style="cursor: pointer;"
+                                        (click)="addQtyItemNoVariant(info.RefID); Subtotal(); salestax();">+</span>
+                                </div>
+                                <div class="col-md-3 text-right">Rs. {{info.OriginalPrice | number}}
+                                </div>
+
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="info.isVariant == true">
+                        <div *ngFor="let eachVariant of info.Variant" class="mb-2">
+                            <div class="">
+
+                                <div class="row" *ngIf="eachVariant.Quantity > 0">
+                                    <i class="feather icon-trash-2 col-md-1 text-c-red"
+                                        (click)="deleteItem(info.RefID,eachVariant.VariantID)"></i>
+                                    <div class="col-md-5 p-0">{{info.NameofItem}}
+                                        <small>({{eachVariant.ItemName}})</small>
+                                    </div>
+                                    <div class="col-md-3" *ngIf="this.itemInBill">
+                                        <span class="badge badge-light-danger col-md-3" style="cursor: pointer;"
+                                            (click)="minusInVariant(info.RefID,eachVariant.VariantID); Subtotal(); salestax();">-</span>
+                                        <span class="col-md-3">{{eachVariant.Quantity}}</span>
+                                        <span class="badge badge-light-success col-md-3" style="cursor: pointer;"
+                                            (click)="addInVariant(info.RefID,eachVariant.VariantID); Subtotal(); salestax();">+</span>
+                                    </div>
+                                    <div class="col-md-3 text-right">Rs. {{eachVariant.CalculatedPrice | number}}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                </div>
+                <div *ngFor="let info of displayItemsTwo" class="mb-2">
+                    <div class="row" *ngIf="info.Quantity > 0">
+                        <i class="feather icon-trash-2 col-md-1 text-c-red" (click)="deleteDeal(info.DealID)"></i>
+                        <div class="col-md-5 p-0">{{info.DealName}}</div>
+                        <div class="col-md-3" *ngIf="this.itemInBill">
+                            <span class="badge badge-light-danger col-md-3" style="cursor: pointer;"
+                                (click)="minusInDeal(info.DealID); Subtotal(); salestax();">-</span>
+                            <span class="col-md-3">{{info.Quantity}}</span>
+
+                            <span class="badge badge-light-success col-md-3" style="cursor: pointer;"
+                                (click)="addInDeal(info.DealID); Subtotal(); salestax();">+</span>
+                        </div>
+                        <div class="col-md-3 text-right">Rs. {{info.DealPrice | number}}
+                        </div>
+
+                        <div class="col-md-12" *ngFor="let eachItem of info.MenuItems">
+                            <ng-container *ngIf="eachItem.VaraintQuantity">
+                                <i class="col-md-1"></i>
+                                <small>{{eachItem.VaraintQuantity | number}} x {{eachItem.MenuName}}
+                                    ({{eachItem.VaraintName}}) </small>
+                            </ng-container>
+                            <ng-container *ngIf="eachItem.Quantity">
+                                <i class="col-md-1"></i>
+                                <small>{{eachItem.Quantity | number}} x {{eachItem.MenuName}}</small>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row" *ngIf="subTotal != 0">
+                    <div class="col-md-6">Subtotal</div>
+                    <div class="col-md-6 text-right">{{this.subTotal | currency: 'Rs. ':'symbol':'1.0'}}</div>
+                </div>
+                <div class="row" *ngIf="salesTax != 0">
+                    <div class="col-md-6">Sales Tax</div>
+                    <div class="col-md-6 text-right">{{this.salesTax | currency: 'Rs. ':'symbol':'1.0'}}</div>
+                </div>
+                <div class="row" *ngIf="discountPercentage != 0">
+                    <div class="col-md-6">Discount %</div>
+                    <div class="col-md-6 text-right">{{this.discountPercentage}}</div>
+                </div>
+                <div class="row" *ngIf="ServiceCharges != 0 && OrderType == 'Dine In'">
+                    <div class="col-md-6">Service Charges</div>
+                    <div class="col-md-6 text-right">{{ServiceCharges}}</div>
+                </div>
+                <hr>
+
+                <div class="row font-weight-bold" *ngIf="subTotal != 0">
+                    <div class="col-md-6">Total</div>
+                    <div class="col-md-6 text-right">{{this.TotalAmount | currency: 'Rs. ':'symbol':'1.0'}}</div>
+                </div>
+                <div class="text-center" *ngIf="subTotal != 0">
+                    <!-- <button class="confirm-button" (click)="print()">
+                        <p class="Confirm">CONFIRM</p>
+                    </button> -->
+                    <button type="submit" class="btn btn-primary" [hidden]="editMode" (click)="print()"
+                        [disabled]="orderConfirming == true">Confirm</button>
+                    <button type="submit" class="btn btn-primary" [hidden]="!editMode"
+                        [disabled]="orderConfirming == true" (click)="updateOrder()">Update</button>
+                </div>
+
+                <p *ngIf="this.PaymentSuccessfull">{{this.Description}}</p>
+            </div>
+
+        </app-card>
+    </div>
+</div>

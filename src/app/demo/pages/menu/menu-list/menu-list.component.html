@@ -1,0 +1,215 @@
+<div class="row">
+
+    <div class="col-sm-12">
+        <app-card [hidHeader]="true" cardClass="tab-card">
+            <div class="" style="
+          display: inline-grid;
+      ">
+                <h5 class="mb-3">Menu items</h5>
+                <button type="button" style="
+              right: 30px;
+              position: absolute;
+          " class="btn btn-icon btn-success float-right" (click)=addNew()>ADD
+                    NEW</button>
+
+            </div>
+            <hr>
+            <ngb-tabset type="pills">
+                <ngb-tab title="All">
+                    <ng-template ngbTabContent>
+                        <div class="table-responsive">
+                            <table datatable="" class="table table-striped row-border table-hover dataTable"
+                                id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>MENU ITEMS</th>
+                                        <th style="text-align: center;">Variant</th>
+                                        <th style="text-align: right;">Price(Rs.)</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row" class="even" *ngFor="let item of allitemsList">
+                                        <td>
+                                            <div class="d-inline-block align-middle"><img src="{{item.Image}}"
+                                                    alt="user image" class="img-radius align-top m-r-15"
+                                                    style="width: 50px;height: 50px;">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-inline-block">
+                                                <h6 class=""><span
+                                                        class="badge badge-light-danger">{{item.RefID}}</span>
+                                                    {{item.MenuName}}
+                                                </h6>
+                                                <p class="d-inline-block font-italic">{{item.Description}}</p>
+                                            </div>
+                                        </td>
+                                        <td *ngIf="item.isVariant == true" style="text-align: center;">
+                                            <p *ngFor="let eachvariantvalue of item.Variant">
+                                                <span>{{eachvariantvalue.ItemName}}</span>
+                                            </p>
+                                        </td>
+                                        <td *ngIf="item.isVariant == false" style="text-align: center;">
+                                            <span>-</span>
+                                        </td>
+                                        <td *ngIf="item.isVariant == true" style="text-align: right;">
+                                            <p *ngFor="let eachvariantvalue of item.Variant">
+                                                <span
+                                                    *ngIf="eachvariantvalue.DiscountPrice != 0">{{eachvariantvalue.CalculatedPrice
+                                                    | number}} / <del class="text-danger">{{eachvariantvalue.ItemPrice |
+                                                        number}}</del></span>
+                                                <span
+                                                    *ngIf="eachvariantvalue.DiscountPrice == 0">{{eachvariantvalue.ItemPrice
+                                                    | number}}</span>
+                                            </p>
+                                        </td>
+                                        <td *ngIf="item.isVariant == false" style="text-align: right;">
+                                            <span *ngIf="item.Discount > 0">{{item.CalculatedPrice
+                                                | number}} / <del class="text-danger">{{item.ItemPrice |
+                                                    number}}</del></span>
+                                            <span *ngIf="item.Discount == 0">{{item.ItemPrice
+                                                | number}}</span>
+                                        </td>
+                                        <td style="text-align: right;">
+                                            <button type="button" class="btn btn-icon btn-info circle-btn-icon"
+                                                title="Edit" (click)="editItem(item.MenuID)"><i
+                                                    class="feather icon-edit"></i></button>
+                                            <button type="button" class="btn btn-icon btn-danger circle-btn-icon"
+                                                (click)="setDeleteItem(item.MenuID,item.MenuName); myLargeModalLabel.show();"><i
+                                                    class="feather icon-trash-2" title="Delete"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="{{category.CategoryName}}" *ngFor="let category of menuCategoryList">
+                    <ng-template ngbTabContent>
+                        <div class="table-responsive">
+                            <table datatable="" class="table table-striped row-border table-hover dataTable"
+                                id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>MENU ITEMS</th>
+                                        <th>Variant</th>
+                                        <th style="text-align: right;">Price(Rs.)</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row" class="even" *ngFor="let item of allitemsList">
+                                        <ng-container *ngIf="item.MenuCategory == category.CategoryName">
+                                            <td>
+                                                <div class="d-inline-block align-middle"><img src="{{item.Image}}"
+                                                        alt="user image" class="img-radius align-top m-r-15"
+                                                        style="width: 50px;height: 50px;">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block">
+                                                    <h6 class=""><span
+                                                            class="badge badge-light-danger">{{item.RefID}}</span>
+                                                        {{item.MenuName}}
+                                                    </h6>
+                                                    <p class="font-italic">{{item.Description}}</p>
+                                                </div>
+                                            </td>
+                                            <td *ngIf="item.isVariant == true">
+                                                <p *ngFor="let eachvariantvalue of item.Variant">
+                                                    <span>{{eachvariantvalue.ItemName}}</span>
+                                                </p>
+                                            </td>
+                                            <td *ngIf="item.isVariant == false">
+                                                <span>-</span>
+                                            </td>
+                                            <td *ngIf="item.isVariant == true" style="text-align: right;">
+                                                <p *ngFor="let eachvariantvalue of item.Variant">
+                                                    <span
+                                                        *ngIf="eachvariantvalue.DiscountPrice != 0">{{eachvariantvalue.CalculatedPrice
+                                                        | number}} / <del
+                                                            class="text-danger">{{eachvariantvalue.ItemPrice |
+                                                            number}}</del></span>
+                                                    <span
+                                                        *ngIf="eachvariantvalue.DiscountPrice == 0">{{eachvariantvalue.ItemPrice
+                                                        | number}}</span>
+                                                </p>
+                                            </td>
+                                            <td *ngIf="item.isVariant == false" style="text-align: right;">
+                                                <span *ngIf="item.Discount != 0">{{item.CalculatedPrice
+                                                    | number}} / <del class="text-danger">{{item.ItemPrice |
+                                                        number}}</del></span>
+                                                <span *ngIf="item.Discount == 0">{{item.ItemPrice
+                                                    | number}}</span>
+                                            </td>
+                                            <td style="text-align: right;">
+                                                <button type="button" class="btn btn-icon btn-info circle-btn-icon"
+                                                    title="Edit" style="cursor: pointer;"><i
+                                                        class="feather icon-edit"></i></button>
+                                                <button type="button" class="btn btn-icon btn-danger circle-btn-icon"
+                                                    style="cursor: pointer;"
+                                                    (click)="setDeleteItem(item.MenuID,item.MenuName); myLargeModalLabel.show();"><i
+                                                        class="feather icon-trash-2" title="Delete"></i></button>
+                                            </td>
+                                        </ng-container>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+        </app-card>
+    </div>
+</div>
+
+
+
+
+
+<app-ui-modal #modalDefault>
+    <div class="app-modal-header">
+        <h5 class="modal-title">Confirm Delete</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+            (click)="modalDefault.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body">
+        <p>Are you sure to delete this menu?</p>
+        <div class="d-inline-block align-middle"><img src="assets/images/user/avatar-4.jpg" alt="user image"
+                class="img-radius align-top m-r-15" style="width: 40px;">
+            <div class="d-inline-block">
+                <h6 class="m-b-0">Chicken Tortilla</h6>
+                <p class="m-b-0">Hearty Soup Full of Shredded Chicken, Corn
+                    Tortillas, Peppers, Tomatoes & Chili Spices</p>
+            </div>
+        </div>
+    </div>
+    <div class="app-modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modalDefault.hide()">Close</button> -->
+        <button type="button" class="btn btn-primary">Confirm</button>
+    </div>
+</app-ui-modal>
+
+<app-ui-modal #myLargeModalLabel [dialogClass]="'modal-lg'">
+    <div class="app-modal-header">
+        <h5 class="modal-title">Confirmation</h5>
+        <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+            (click)="myLargeModalLabel.hide()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="app-modal-body" *ngFor="let item of allitemsList">
+        <ng-container *ngIf="item.MenuName == itemName">
+            <p>Are you sure you want to delete <b>{{item.MenuName}}</b>?</p>
+        </ng-container>
+
+    </div>
+    <div class="app-modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+            (click)="myLargeModalLabel.hide()">Cancel</button>
+        <button type="button" class="btn btn-primary"
+            (click)="confirmDelete(); myLargeModalLabel.hide();">Delete</button>
+    </div>
+</app-ui-modal>

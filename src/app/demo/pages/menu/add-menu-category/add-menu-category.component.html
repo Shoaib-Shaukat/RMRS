@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-sm-12">
+        <app-card [hidHeader]="true" [options]="false">
+            <h5 class="mt-5">Add Menu Category</h5>
+            <hr>
+            <form action="javascript:" [formGroup]="addMenuCategoryForm" (ngSubmit)="onSubmit()">
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="inputEmail4">Add New Menu Category</label>
+                        <input type="text" class="form-control" id="itemName" contenteditable="true" list="categories"
+                            formControlName="NameOfCategory" maxlength="50"
+                            [class.is-invalid]="addMenuCategoryForm.controls['NameOfCategory'].invalid && addMenuCategoryForm.controls['NameOfCategory'].touched"
+                            required>
+                            <datalist id="categories">
+                                <option value="Starter">
+                                <option value="Soup">
+                                <option value="Main Course">
+                                <option value="Drinks">
+                                <option value="Dessert">
+                                <option value="Burgers">
+                                <option value="Pizza">
+                                <option value="Kharai">
+                              </datalist>
+                        <div *ngIf="(addMenuCategoryForm.controls['NameOfCategory'].invalid && addMenuCategoryForm.controls['NameOfCategory'].touched) || addMenuCategoryForm.controls['NameOfCategory'].dirty"
+                            class="text-left">
+                            <small *ngIf="addMenuCategoryForm.controls['NameOfCategory'].errors?.required"
+                                class="text-danger">Menu
+                                Name is
+                                required!</small>
+                            <!--question mark(?) is a safe navigation operator-->
+                            <small *ngIf="addMenuCategoryForm.controls['NameOfCategory'].errors?.pattern"
+                                class="text-danger">Enter
+                                alphabets only
+                                and atleast 3!</small>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+                <button type="submit" class="btn btn-primary float-right"
+                    [disabled]="!addMenuCategoryForm.valid">ADD</button>
+                <button type="submit" class="btn btn-primary float-right" (click)=canceled()>Cancel</button>
+
+            </form>
+            <div class="table-responsive">
+                <table datatable="" class="table table-striped row-border table-hover dataTable" id="DataTables_Table_0"
+                    role="grid" aria-describedby="DataTables_Table_0_info">
+                    <tbody>
+                        <tr role="row" class="even" *ngFor="let menuCategory of menuCategoryList">
+                            <td class="sorting_1">
+                                <div class="d-inline-block align-middle">
+                                    <img src="assets/images/menu-item-placeholder-image.png" alt="user image"
+                                        class="img-radius align-top m-r-15" style="width: 40px;">
+                                    <div class="d-inline-block">
+                                        <h6 class="m-b-0">{{menuCategory.CategoryName}}</h6>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr>
+
+
+        </app-card>
+    </div>
+
+</div>

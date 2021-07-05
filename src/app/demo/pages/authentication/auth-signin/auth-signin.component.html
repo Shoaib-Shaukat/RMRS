@@ -1,0 +1,114 @@
+<section class="signup-area">
+  <div class="row m-0">
+    <div class="col-lg-6 col-md-12 p-0">
+      <div class="signup-content">
+        <div class="d-table">
+          <div class="d-table-cell">
+            <div class="signup-form">
+              <app-card [hidHeader]="true" cardClass="text-center">
+                <h5 class="card-title">Log in to Restaurant</h5>
+                <button class="btn post col-md-6" [class.active]="admin == true" (click)="runAsAdmin()">Owner</button>
+                <button class="btn post col-md-6" [class.active]="employee == true" (click)="runAsEmp()">Staff</button>
+                <!-- <p class="card-text">You must change your password now and login again.</p> -->
+                <form action="javascript:" [formGroup]="signInForm" (ngSubmit)="onSubmit()" *ngIf = "admin == true">
+                  <div class="form-group">
+                    <label class="float-left" for="inputEmail4">Email Address</label>
+                    <input type="text" class="form-control" placeholder="Email address or Phone #"
+                      formControlName="Email">
+                    <div
+                      *ngIf="(signInForm.controls['Email'].invalid && signInForm.controls['Email'].touched) || signInForm.controls['Email'].dirty"
+                      class="text-left">
+                      <small *ngIf="signInForm.controls['Email'].errors?.required" class="text-danger">Email
+                        is
+                        required!</small>
+                      <!--question mark(?) is a safe navigation operator-->
+                      <small *ngIf="signInForm.controls['Email'].errors?.pattern" class="text-danger">Email entered is
+                        not correct!</small>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="float-left" for="inputEmail4">Password</label>
+                    <input type="password" name="password" id="password" placeholder="Password" class="form-control"
+                      formControlName="Password">
+                    <div
+                      *ngIf="(signInForm.controls['Password'].invalid && signInForm.controls['Password'].touched) || signInForm.controls['Password'].dirty"
+                      class="text-left">
+                      <small *ngIf="signInForm.controls['Password'].errors?.required" class="text-danger">Password
+                        is
+                        required!</small>
+                    </div>
+                  </div>
+                  <small *ngIf="error" class="text-danger">{{error}}</small>
+                  <div class="" style="display: flow-root;">
+                    <p class="float-left mb-2 text-muted">Forgot password? <a [routerLink]="['/auth/forget-password']"
+                        class="f-w-400">Reset</a></p>
+                    <button type="submit" class="btn btn-primary float-right" [disabled]="!signInForm.valid">LOG
+                      IN</button>
+                  </div>
+                </form>
+                <!-- //................................................................. -->
+                <form action="javascript:" [formGroup]="staffSignInForm" (ngSubmit)="onSubmit()" *ngIf = "employee == true">
+                  <div class="form-group">
+                    <label class="float-left" for="inputEmail4">User Name</label>
+                    <input type="text" class="form-control" placeholder="Email address or Phone #"
+                      formControlName="Username">
+                    <div
+                      *ngIf="(staffSignInForm.controls['Username'].invalid && staffSignInForm.controls['Username'].touched) || staffSignInForm.controls['Username'].dirty"
+                      class="text-left">
+                      <small *ngIf="staffSignInForm.controls['Username'].errors?.required" class="text-danger">User Name
+                        is
+                        required!</small>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="float-left" for="inputEmail4">Password</label>
+                    <input type="password" name="password" id="password" placeholder="Password" class="form-control"
+                      formControlName="Password">
+                    <div
+                      *ngIf="(staffSignInForm.controls['Password'].invalid && staffSignInForm.controls['Password'].touched) || staffSignInForm.controls['Password'].dirty"
+                      class="text-left">
+                      <small *ngIf="staffSignInForm.controls['Password'].errors?.required" class="text-danger">Password
+                        is
+                        required!</small>
+                    </div>
+                  </div>
+                  <small *ngIf="error" class="text-danger">{{error}}</small>
+                  <div class="" style="display: flow-root;">
+                    <p class="float-left mb-2 text-muted">Forgot password? <a [routerLink]="['/auth/forget-password']"
+                        class="f-w-400">Reset</a></p>
+                    <button type="submit" class="btn btn-primary float-right" [disabled]="!staffSignInForm.valid">LOG
+                      IN</button>
+                  </div>
+                </form>
+                <hr>
+                <div>
+                  <p class="mb-0 text-muted">Don’t have an account? <a [routerLink]="['/auth/signup']"
+                      class="f-w-400">Signup</a></p>
+                </div>
+              </app-card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12 p-0">
+      <div class="signup-image">
+        <img src="assets/images/auth/image.png" alt="image">
+        <div class="signup-content">
+          <div class="d-table">
+            <div class="d-table-cell">
+              <h3 class="text-white pl-4 pr-4">
+                Welcome to the KPRA<br>
+                Restaurant Management System
+              </h3>
+              <div class="mt-4 pl-4 col-md-3">
+                <ngb-progressbar type="primary" height="6px" [value]="100"></ngb-progressbar>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Login Area -->

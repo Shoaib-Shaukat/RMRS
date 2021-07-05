@@ -1,0 +1,271 @@
+<div class="row">
+    <div class="col-sm-12">
+
+        <div class="row btn-page">
+            <div id="printTable" class="container">
+                <div class="card">
+
+                    <div class="card-body">
+                        <h5>Orders Detail</h5>
+                    </div>
+                    <hr>
+
+                    <div class="card-body" *ngFor="let detail of DetailofOrder">
+                        <div class="row invoive-info">
+                            <!-- <div class="col-md-4 col-xs-12 invoice-client-info">
+                                <h6>Customer Information :</h6>
+                                <h6 class=" row">Name: <p class="ml-2">{{detail.CustomerName}}</p></h6> 
+                                <p class="m-0">Customer ID: {{detail.CustomerID}}</p>
+                            </div> -->
+                            <div class="col-md-4 col-sm-6">
+                                <h6>Customer Information :</h6>
+                                <table class="table table-responsive invoice-table invoice-order table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <th>Name :</th>
+                                            <td>{{detail.CustomerName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>ID :</th>
+                                            <td><span class="label label-warning">{{detail.CustomerID}}</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Address :</th>
+                                            <td>{{detail.CustomerAddress}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-4 col-sm-6">
+                                <h6>Order Information :</h6>
+                                <table class="table table-responsive invoice-table invoice-order table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <th>Date :</th>
+                                            <td>{{detail.OrderDate}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Status :</th>
+                                            <td><span class="label label-warning">{{detail.Status}}</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th> Order Id :</th>
+                                            <td> {{detail.OrderID}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-4 col-sm-6">
+                                <h6 class="m-b-20">Invoice Number:<span>123456789</span></h6>
+                                <h6 class="text-uppercase text-primary">Total Due : <span>
+                                        Rs. {{detail.TotalAmount | number}}</span></h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="table invoice-detail-table">
+                                        <thead>
+                                            <tr class="thead-default">
+                                                <th>Items</th>
+                                                <th style="text-align: center;">Quantity</th>
+                                                <th style="text-align: right;">Price (Rs.)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let detaildepth of itemsList">
+                                            <ng-container *ngIf="!detaildepth.Deal">
+                                                <tr>
+                                                    <td *ngIf="detaildepth.isVariant == true">
+                                                        <h6>{{detaildepth.MenuName}}
+                                                            <small>({{detaildepth.Variant.ItemName}})</small>
+                                                        </h6>
+                                                        <p class="m-0">{{detaildepth.Description}}
+                                                        </p>
+                                                    </td>
+                                                    <td *ngIf="detaildepth.isVariant == false">
+                                                        <h6>{{detaildepth.MenuName}}
+                                                        </h6>
+                                                        <p class="m-0">{{detaildepth.Description}}
+                                                        </p>
+                                                    </td>
+
+                                                    <td style="text-align: center;">
+                                                        {{detaildepth.Quantity}}
+                                                    </td>
+                                                    <td style="text-align: right;">
+                                                        {{detaildepth.MenuPrice | number}}
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+
+                                        </tbody>
+                                        <tbody *ngFor="let detaildepth of dealsList">
+                                            <ng-container *ngIf="detaildepth.Deal">
+                                                <tr>
+                                                    <td>
+                                                        <h6>{{detaildepth.MenuName}}
+                                                        </h6>
+                                                        <p class="m-0">{{detaildepth.Description}}
+                                                        </p>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        {{detaildepth.Quantity}}
+                                                    </td>
+
+                                                    <td style="text-align: right;">
+                                                        {{detaildepth.MenuPrice | number}}
+                                                    </td>
+
+                                                </tr>
+                                            </ng-container>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-responsive invoice-table invoice-total">
+                                    <tbody>
+                                        <tr>
+                                            <th>Sub Total :</th>
+                                            <td>
+                                                {{detail.SubTotal | currency: 'Rs. ':'symbol':'1.0'}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tax 7.5% :</th>
+                                            <td>
+                                                {{detail.SalesTax | currency: 'Rs. ':'symbol':'1.0'}}</td>
+                                        </tr>
+                                        <tr *ngIf="detail.DeliveryCharges > 0">
+                                            <th>Delivery Charges:</th>
+                                            <td>Rs
+                                                {{detail.DeliveryCharges}}</td>
+                                        </tr>
+
+                                        <tr class="text-info">
+                                            <td>
+                                                <hr>
+                                                <h5 class="text-primary m-r-10">Total :</h5>
+                                            </td>
+                                            <td>
+                                                <hr>
+                                                <h5 class="text-primary">
+                                                    {{detail.TotalAmount | currency: 'Rs. ':'symbol':'1.0'}}</h5>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h6 class="text-center">Thank you very much!!!</h6>
+                                <p class="text-center">Powered By: Khyber Pakhtunkhwa Revenue Authority -
+                                    www.kpra.kp.gov.pk </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-center" *ngFor="let detail of DetailofOrder">
+                    <div class="col-sm-12 invoice-btn-group text-center">
+                        <button type="button" class="btn waves-effect waves-light btn-primary btn-print-invoice m-b-10"
+                            (click)="print()" [hidden]="orderPaymentMade == false"
+                            [disabled]="(detail.Status == 'PAYMENT_MADE') || (detail.Status == 'NEW_ORDER')"
+                            printTitle="{{detail.OrderID}}" printSectionId="print-section" ngxPrint>PAYMENT
+                            MADE</button>
+                        <button type="button" class="btn waves-effect waves-light btn-primary m-b-10"
+                            (click)="backClicked()">Back</button>
+                        <!-- <button type="button" class="btn waves-effect waves-light btn-primary m-b-10"
+                                (click)="backClicked()">Back</button> -->
+                        <button [hidden]="orderPrintInvoice == false"
+                            class="btn waves-effect waves-light btn-primary m-b-10" printTitle="{{detail.OrderID}}"
+                            printSectionId="print-section" ngxPrint>Print invoice</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="ticket" id="print-section" style="display: none;" *ngFor="let detail of DetailofOrder">
+    <h3 class="text-center">RMRS</h3>
+    <p class="centered">Restaurant: {{detail.RestaurantName}}
+        <br>Order ID: {{detail.OrderID}}
+        <br>Date: {{detail.OrderDate | date: 'medium' :'GMT+5:00'}}
+    </p>
+    <table>
+        <thead>
+            <tr class="border-top border-bottom">
+                <th class="description" style="text-align: left;">Items</th>
+                <th class="quantity" style="text-align: right;">Qty</th>
+                <th class="price" style="text-align: right;">Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let detaildepth of itemsList">
+                <td class="description" style="text-align: left;" *ngIf="detaildepth.isVariant == false">
+                    {{detaildepth.MenuName}}
+                </td>
+                <td class="description" style="text-align: left;" *ngIf="detaildepth.isVariant == true">
+                    {{detaildepth.MenuName}}
+                    <small>({{detaildepth.Variant.ItemName}})</small>
+                </td>
+                <td class="quantity" style="text-align: right;" *ngIf="detaildepth.isVariant == false">
+                    {{detaildepth.Quantity}}</td>
+                <td class="quantity" style="text-align: right;" *ngIf="detaildepth.isVariant == true">
+                    {{detaildepth.Variant.Quantity}}</td>
+                <td class="price" style="text-align: right;" *ngIf="detaildepth.isVariant == false">
+                    {{detaildepth.MenuPrice | number}}</td>
+                <td class="price" style="text-align: right;" *ngIf="detaildepth.isVariant == true">
+                    {{detaildepth.Variant.CalculatedPrice | number}}</td>
+            </tr>
+            <tr *ngFor="let detaildepth of dealsList">
+                <td class="description">{{detaildepth.MenuName}}
+                    <br>
+                    <small>
+                        {{detaildepth.Description}}
+                    </small>
+                </td>
+                <td class="quantity" style="text-align: right;">{{detaildepth.Quantity}}</td>
+                <td class="price" style="text-align: right;">{{detaildepth.MenuPrice | number}}</td>
+            </tr>
+        </tbody>
+        <thead>
+            <tr class="border-top border-bottom">
+                <th class="description" style="text-align: left;"></th>
+                <th class="quantity"></th>
+                <th class="price" style="text-align: right;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="description">Sub Total :</td>
+                <td class="quantity"></td>
+                <td class="price" style="text-align: right;">Rs. {{detail.SubTotal | number}}</td>
+            </tr>
+            <tr>
+                <td class="description">Tax 7.5% :</td>
+                <td class="quantity"></td>
+                <td class="price" style="text-align: right;">Rs. {{detail.SalesTax | number}}</td>
+            </tr>
+            <tr *ngIf="detail.DeliveryCharges > 0">
+                <td class="description">Delivery Charges :</td>
+                <td class="quantity"></td>
+                <td class="price" style="text-align: right;">Rs. {{detail.DeliveryCharges | number}}</td>
+            </tr>
+            <tr>
+                <td class="description">Total :</td>
+                <td class="quantity"></td>
+                <td class="price" style="text-align: right;">Rs. {{detail.TotalAmount | number}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="centered">Thank you very much!!!
+        <br>Powered By:
+        <br> KPRA - www.kpra.kp.gov.pk
+    </p>
+</div>

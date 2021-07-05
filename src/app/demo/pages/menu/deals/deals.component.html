@@ -1,0 +1,356 @@
+<div class="row">
+
+    <div class="col-sm-12">
+        <app-card [hidHeader]="true" cardClass="tab-card">
+            <div class="" style="
+          display: inline-grid;
+      ">
+                <h5 class="mb-3">Menu items</h5>
+                <button type="button" style="
+              right: 30px;
+              position: absolute;
+          " class="btn btn-primary float-right mb-5" (click)="myLargeModalLabel.show(); fillDescription();"
+                    [disabled]="!openPopup">CONFIRM</button>
+            </div>
+            <h5 style="text-align: right; margin: 12px;" [hidden]="!openPopup">Total Rs. {{calculatedPrice | number}}
+            </h5>
+            <ngb-tabset type="pills">
+                <ngb-tab title="All">
+                    <ng-template ngbTabContent>
+                        <div class="table-responsive">
+                            <table datatable="" class="table table-striped row-border table-hover dataTable"
+                                id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Menu Items</th>
+                                        <th>Variant</th>
+                                        <th style="text-align: center;">Quantity</th>
+                                        <th style="text-align: right;">Price(Rs)</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let item of allitemsListCopy">
+                                    <tr role="row" class="even">
+                                        <ng-container *ngIf="item.isVariant == false">
+                                            <td>
+                                                <input type="checkbox" style="margin-right: 40px;"
+                                                    [checked]="checkTheCheckBoxForNoVariant(item.MenuName)"
+                                                    id="saveItemNameCheckBox" #saveItemNameCheckBox
+                                                    (click)="itemCheckForNoVariant(saveItemNameCheckBox.checked, item.CategoryID, item.MenuName, item.CalculatedPrice, item.Quantity)">
+
+                                                <div class="d-inline-block align-middle"><img src="{{item.Image}}"
+                                                        alt="user image" class="img-radius align-top m-l-20"
+                                                        style="width: 50px;height: 50px;">
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <h6 class="m-b-0">{{item.MenuName}}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <span class="m-b-0">-</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td  style="text-align: center;">
+                                                <div class="d-inline-block align-middle">
+                                                    <span class="badge badge-light-danger" style="cursor: pointer;"
+                                                        (click)="minusVQNoV(item.MenuName)">-</span>
+                                                    {{item.Quantity}}
+                                                    <span class="badge badge-light-success" style="cursor: pointer;"
+                                                        (click)="addVQNoV(item.MenuName)">+</span>
+                                                </div>
+                                            </td>
+                                            <td style="text-align: right;">
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <span class="text-right"
+                                                            *ngIf="item.Discount != 0">{{item.CalculatedPrice
+                                                            | number}} / <del class="text-danger">{{item.ItemPrice |
+                                                                number}}</del></span>
+                                                        <span class="text-right"
+                                                            *ngIf="item.Discount == 0">{{item.ItemPrice
+                                                            | number}}</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </ng-container>
+                                    </tr>
+
+                                    <ng-container *ngIf="item.isVariant == true">
+                                        <ng-container *ngFor="let eachvariantvalue of item.Variant">
+                                            <tr role="row" class="even">
+                                                <td>
+                                                    <input type="checkbox" style="margin-right: 40px;"
+                                                        [checked]="checkTheCheckBox(item.MenuName,eachvariantvalue.ItemName)"
+                                                        id="saveItemNameCheckBox" #saveItemNameCheckBox
+                                                        (click)="itemCheck(saveItemNameCheckBox.checked, item.CategoryID, item.MenuName, eachvariantvalue.CalculatedPrice, eachvariantvalue.ItemName,  eachvariantvalue.VariantQuantity)">
+
+                                                    <div class="d-inline-block align-middle"><img src="{{item.Image}}"
+                                                            alt="user image" class="img-radius align-top m-l-20"
+                                                            style="width: 50px;height: 50px;">
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    <div class="d-inline-block align-middle">
+                                                        <div class="d-inline-block">
+                                                            <h6 class="m-b-0">{{item.MenuName}}</h6>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    <div class="d-inline-block align-middle">
+                                                        <div class="d-inline-block">
+                                                            <span class="m-b-0">{{eachvariantvalue.ItemName}}</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <div class="d-inline-block align-middle">
+                                                        <span class="badge badge-light-danger" style="cursor: pointer;"
+                                                            (click)="minusVQ(item.MenuName, eachvariantvalue.ItemName)">-</span>
+                                                        {{eachvariantvalue.VariantQuantity}}
+                                                        <span class="badge badge-light-success" style="cursor: pointer;"
+                                                            (click)="addVQ(item.MenuName, eachvariantvalue.ItemName)">+</span>
+                                                    </div>
+                                                </td>
+                                                <td style="text-align: right;">
+                                                    <div class="d-inline-block align-middle">
+                                                        <div class="d-inline-block">
+                                                            <span class="text-right"
+                                                                *ngIf="eachvariantvalue.DiscountPrice != 0">{{eachvariantvalue.CalculatedPrice
+                                                                | number}} / <del
+                                                                    class="text-danger">{{eachvariantvalue.ItemPrice |
+                                                                    number}}</del></span>
+                                                            <span class="text-right"
+                                                                *ngIf="eachvariantvalue.DiscountPrice == 0">{{eachvariantvalue.ItemPrice
+                                                                | number}}</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        </ng-container>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="{{category.CategoryName}}" *ngFor="let category of menuCategoryList">
+                    <ng-template ngbTabContent>
+                        <div class="table-responsive">
+                            <table datatable="" class="table table-striped row-border table-hover dataTable"
+                                id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Menu Items</th>
+                                        <th>Variant</th>
+                                        <th  style="text-align: center;">Quantity</th>
+                                        <th style="text-align: right;">Price(Rs)</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let item of allitemsListCopy">
+                                    <ng-container *ngIf="item.MenuCategory == category.CategoryName">
+
+
+                                        <tr role="row" class="even">
+
+                                            <ng-container *ngIf="item.isVariant == false">
+                                                <td>
+                                                    <input type="checkbox" style="margin-right: 40px;"
+                                                        [checked]="checkTheCheckBoxForNoVariant(item.MenuName)"
+                                                        id="saveItemNameCheckBox" #saveItemNameCheckBox
+                                                        (click)="itemCheckForNoVariant(saveItemNameCheckBox.checked, item.CategoryID, item.MenuName, item.CalculatedPrice, item.Quantity)">
+
+                                                    <div class="d-inline-block align-middle"><img src="{{item.Image}}"
+                                                            alt="user image" class="img-radius align-top m-l-20"
+                                                            style="width: 50px;height: 50px;">
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    <div class="d-inline-block align-middle">
+                                                        <div class="d-inline-block">
+                                                            <h6 class="m-b-0">{{item.MenuName}}</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-inline-block align-middle">
+                                                        <div class="d-inline-block">
+                                                            <span class="m-b-0">-</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td  style="text-align: center;">
+                                                    <div class="d-inline-block align-middle">
+                                                        <span class="badge badge-light-danger" style="cursor: pointer;"
+                                                            (click)="minusVQNoV(item.MenuName)">-</span>
+                                                        {{item.Quantity}}
+                                                        <span class="badge badge-light-success" style="cursor: pointer;"
+                                                            (click)="addVQNoV(item.MenuName)">+</span>
+                                                    </div>
+                                                </td>
+                                                <td style="text-align: right;">
+                                                    <div class="d-inline-block align-middle">
+                                                        <div class="d-inline-block">
+                                                            <span class="text-right"
+                                                                *ngIf="item.Discount != 0">{{item.CalculatedPrice
+                                                                | number}} / <del class="text-danger">{{item.ItemPrice |
+                                                                    number}}</del></span>
+                                                            <span class="text-right"
+                                                                *ngIf="item.Discount == 0">{{item.ItemPrice
+                                                                | number}}</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </ng-container>
+                                        </tr>
+
+                                        <ng-container *ngIf="item.isVariant == true">
+                                            <ng-container *ngFor="let eachvariantvalue of item.Variant">
+                                                <tr role="row" class="even">
+                                                    <td>
+                                                        <input type="checkbox" style="margin-right: 40px;"
+                                                            [checked]="checkTheCheckBox(item.MenuName,eachvariantvalue.ItemName)"
+                                                            id="saveItemNameCheckBox" #saveItemNameCheckBox
+                                                            (click)="itemCheck(saveItemNameCheckBox.checked, item.CategoryID, item.MenuName, eachvariantvalue.CalculatedPrice, eachvariantvalue.ItemName,  eachvariantvalue.VariantQuantity)">
+
+                                                        <div class="d-inline-block align-middle"><img
+                                                                src="{{item.Image}}" alt="user image"
+                                                                class="img-radius align-top m-l-20"
+                                                                style="width: 50px;height: 50px;">
+                                                        </div>
+
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-inline-block align-middle">
+                                                            <div class="d-inline-block">
+                                                                <h6 class="m-b-0">{{item.MenuName}}</h6>
+                                                            </div>
+                                                        </div>
+
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-inline-block align-middle">
+                                                            <div class="d-inline-block">
+                                                                <span class="m-b-0">{{eachvariantvalue.ItemName}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td  style="text-align: center;">
+                                                        <div class="d-inline-block align-middle">
+                                                            <span class="badge badge-light-danger"
+                                                                style="cursor: pointer;"
+                                                                (click)="minusVQ(item.MenuName, eachvariantvalue.ItemName)">-</span>
+                                                            {{eachvariantvalue.VariantQuantity}}
+                                                            <span class="badge badge-light-success"
+                                                                style="cursor: pointer;"
+                                                                (click)="addVQ(item.MenuName, eachvariantvalue.ItemName)">+</span>
+                                                        </div>
+                                                    </td>
+                                                    <td style="text-align: right;">
+                                                        <div class="d-inline-block align-middle">
+                                                            <div class="d-inline-block">
+                                                                <span class="text-right"
+                                                                    *ngIf="eachvariantvalue.DiscountPrice != 0">{{eachvariantvalue.CalculatedPrice
+                                                                    | number}} / <del
+                                                                        class="text-danger">{{eachvariantvalue.ItemPrice
+                                                                        |
+                                                                        number}}</del></span>
+                                                                <span class="text-right"
+                                                                    *ngIf="eachvariantvalue.DiscountPrice == 0">{{eachvariantvalue.ItemPrice
+                                                                    | number}}</span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+        </app-card>
+    </div>
+</div>
+
+<app-ui-modal #myLargeModalLabel [dialogClass]="'modal-lg'">
+    <div class="app-modal-header">
+
+    </div>
+    <div class="app-modal-body">
+        <form [formGroup]="ConfirmationForm">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="item-name">Deal Name</label>
+                    <input type="text" class="form-control" id="DealName" contenteditable="true"
+                        formControlName="DealName" maxlength="50"
+                        [class.is-invalid]="ConfirmationForm.controls['DealName'].invalid && ConfirmationForm.controls['DealName'].touched"
+                        required>
+                    <div *ngIf="(ConfirmationForm.controls['DealName'].invalid && ConfirmationForm.controls['DealName'].touched) || ConfirmationForm.controls['DealName'].dirty"
+                        class="text-left">
+                        <small *ngIf="ConfirmationForm.controls['DealName'].errors?.required" class="text-danger">Deal
+                            Name is
+                            required!</small>
+                        <small *ngIf="ConfirmationForm.controls['DealName'].errors?.pattern" class="text-danger">Enter
+                            alphabets only
+                            and atleast 3!</small>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="item-name">Deal Price</label>
+                    <input type="text" class="form-control" id="DealPrice" contenteditable="true"
+                        formControlName="DealPrice" maxlength="50"
+                        [class.is-invalid]="ConfirmationForm.controls['DealPrice'].invalid && ConfirmationForm.controls['DealPrice'].touched"
+                        required>
+                    <div *ngIf="(ConfirmationForm.controls['DealPrice'].invalid && ConfirmationForm.controls['DealPrice'].touched) || ConfirmationForm.controls['DealPrice'].dirty"
+                        class="text-left">
+                        <small *ngIf="ConfirmationForm.controls['DealPrice'].errors?.required" class="text-danger">Deal
+                            Price is
+                            required!</small>
+                        <small *ngIf="ConfirmationForm.controls['DealPrice'].errors?.pattern" class="text-danger">Enter
+                            number only!</small>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="item-name">Description</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="7" style="font-size: 12px;"
+                        readonly>{{Description}}</textarea>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Upload image</label>
+                    <input type="file" #Image accept="image/*" formControlName="AttachImage"
+                        (change)="handleFileInput($event.target.files); Uploadimage();"
+                        [class.is-invalid]="ConfirmationForm.controls['AttachImage'].invalid && ConfirmationForm.controls['AttachImage'].touched"
+                        required>
+                    <div *ngIf="(ConfirmationForm.controls['AttachImage'].invalid && ConfirmationForm.controls['AttachImage'].touched) || ConfirmationForm.controls['AttachImage'].dirty"
+                        class="text-left">
+                        <small *ngIf="ConfirmationForm.controls['AttachImage'].errors?.required"
+                            class="text-danger">Please upload the image</small>
+                        <!--question mark(?) is a safe navigation operator-->
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="app-modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+            (click)="myLargeModalLabel.hide()">Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="!ConfirmationForm.valid"
+            (click)="confirmAddDeal(); myLargeModalLabel.hide()">Add</button>
+    </div>
+</app-ui-modal>

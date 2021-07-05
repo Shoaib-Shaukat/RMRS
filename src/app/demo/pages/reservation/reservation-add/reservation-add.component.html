@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [hidHeader]="true" [options]="false">
+      <h5 class="mb-3">Add Reservation</h5>
+      <hr>
+      <form action="javascript:" [formGroup]="reservationForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="inputEmail4">Name</label>
+            <input type="text" class="form-control" id="inputEmail4" placeholder="Name of Guest" formControlName="Name" maxlength="30">
+            <div
+              *ngIf="(reservationForm.controls['Name'].invalid && reservationForm.controls['Name'].touched) || reservationForm.controls['Name'].dirty"
+              class="text-left">
+              <small *ngIf="reservationForm.controls['Name'].errors?.required" class="text-danger">Name of Guest is
+                required!</small>
+              <small *ngIf="reservationForm.controls['Name'].errors?.pattern" class="text-danger">Enter alphabets only
+                and atleast 3!</small>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputEmail4">Mobile Number</label>
+            <input type="number" class="form-control" id="inputEmail4" placeholder="(03XXXXXXXXX)"
+              formControlName="MobileNumber">
+            <div
+              *ngIf="(reservationForm.controls['MobileNumber'].invalid && reservationForm.controls['MobileNumber'].touched) || reservationForm.controls['MobileNumber'].dirty"
+              class="text-left">
+              <small *ngIf="reservationForm.controls['MobileNumber'].errors?.required" class="text-danger">Mobile Number
+                is required!</small>
+              <!--question mark(?) is a safe navigation operator-->
+              <small *ngIf="reservationForm.controls['MobileNumber'].errors?.pattern" class="text-danger">Mobile Number
+                is not correct!</small>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputEmail4">Date & Time</label>
+            <input type="datetime-local" class="form-control" id="inputEmail4" placeholder="" formControlName="Date">
+            <div
+              *ngIf="(reservationForm.controls['Date'].invalid && reservationForm.controls['Date'].touched) || reservationForm.controls['Date'].dirty"
+              class="text-left">
+              <small *ngIf="reservationForm.controls['Date'].errors?.required" class="text-danger">Date
+                is
+                required!</small>
+              <!--question mark(?) is a safe navigation operator-->
+              <small *ngIf="reservationForm.controls['Date'].errors?.pattern" class="text-danger">Date is not
+                correct!</small>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="inputEmail4">Number of guest</label>
+            <input type="number" class="form-control" id="inputEmail4" placeholder="Number of guest"
+              formControlName="NoOfGuest">
+            <div
+              *ngIf="(reservationForm.controls['NoOfGuest'].invalid && reservationForm.controls['NoOfGuest'].touched) || reservationForm.controls['NoOfGuest'].dirty"
+              class="text-left">
+              <small *ngIf="reservationForm.controls['NoOfGuest'].errors?.required" class="text-danger">Number of Guest
+                is
+                required!</small>
+              <!--question mark(?) is a safe navigation operator-->
+              <small *ngIf="reservationForm.controls['NoOfGuest'].errors?.pattern" class="text-danger">Number of Guest
+                is not correct!</small>
+            </div>
+          </div>
+
+        </div>
+
+
+        <button type="submit" class="btn btn-primary float-right" *ngIf="!this.xyz"
+          [disabled]="!reservationForm.valid">SAVE</button>
+        <button type="submit" class="btn btn-primary float-right" *ngIf="this.xyz"
+          [disabled]="!reservationForm.valid">SAVE CHANGES</button>
+        <button type="submit" class="btn btn-primary float-right" (click)=canceled()>CANCEL</button>
+      </form>
+    </app-card>
+  </div>
+  
+</div>
