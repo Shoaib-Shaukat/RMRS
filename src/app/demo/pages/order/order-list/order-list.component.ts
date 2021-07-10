@@ -6,6 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { registerLocaleData } from '@angular/common';
 import localFr from '@angular/common/locales/fr'
 import { MenuService } from 'src/app/shared/services/menu.service';
+import { IndexedDBService } from 'src/app/shared/services/indexe-db.service';
+import { OnlineOfflineService } from 'src/app/shared/online-offline.service';
 registerLocaleData(localFr, 'fr');
 @Component({
   selector: 'app-order-list',
@@ -18,21 +20,93 @@ export class OrderListComponent implements OnInit {
   status: boolean = false;
   Orderid: any;
   Permission: any;
+  offlineOrders: any;
   countTotalOrders: number = 0;
   orderView: boolean = false;
   orderEdit: boolean = false;
   orderAccept: boolean = false;
   takeOrder: boolean = false;
   private flag: boolean = false;
-  constructor(private menuService: MenuService, private router: Router, private restaurantService: RestaurantService, private toastr: ToastrService) { }
+  constructor(private offlineOnline: OnlineOfflineService, private indexedDBService: IndexedDBService, private menuService: MenuService, private router: Router, private restaurantService: RestaurantService, private toastr: ToastrService) {
+    this.offlineOrders = [];
+  }
 
   ngOnInit(): void {
+
+    this.restaurantOrder();
     this.flag = true;
     this.RestaurantID = localStorage.getItem("restaurantIdforProfile");
-    this.restaurantOrder();
 
     this.setPermission();
-
+    debugger
+    if (this.offlineOnline.isOnline) {
+      debugger
+      this.getOfflineOrders();
+    }
+    else {
+      debugger
+      this.pushOfflineOrders();
+    }
+  }
+  restaurantOrder() {
+    debugger
+    this.restaurantService.RestaurantOrder(this.RestaurantID).subscribe(
+      async data => {
+        this.orderList = data['data'];
+        debugger
+        this.orderList.reverse();
+        await this.indexedDBService.addUser(data['data'], 'OrdersList')
+        for (let i = 0; i < this.orderList.length; i++) {
+          this.orderList[i].TotalAmount = Math.round(this.orderList[i].TotalAmount);
+        }
+        this.restaurantService.updateOrderDetail(this.orderList);
+      },
+      async err => {
+        this.orderList = await this.indexedDBService.getUser('OrdersList');
+      }
+    );
+    setTimeout(() => {
+      if (this.flag) {
+        this.restaurantOrder();
+      }
+    }, 5000);
+  }
+  getOfflineOrders = async () => {
+    debugger
+    this.offlineOrders = await this.indexedDBService.getUser('OfflineOrdersList');
+    console.log('orders list', this.offlineOrders)
+    for (let i = 0; i < this.offlineOrders.length; i++) {
+      this.restaurantService.RestaurantRecipt(this.offlineOrders[i]).subscribe(
+        data => {
+          debugger
+          this.showSuccessForOrders();
+        },
+        err => {
+          debugger
+        }
+      );
+    }
+    this.indexedDBService.deleteUser('OfflineOrdersList');
+    this.offlineOrders = [];
+  }
+  pushOfflineOrders = async () => {
+    debugger
+    this.offlineOrders = await this.indexedDBService.getUser('OfflineOrdersList');
+    debugger
+    for (let i = 0; i < await this.offlineOrders.length; i++) {
+      await this.orderList.push(this.offlineOrders[i]);
+      console.log(this.orderList)
+    }
+    debugger
+    await this.indexedDBService.addUser(this.orderList, 'OrdersList')
+    this.orderList = await this.indexedDBService.getUser('OrdersList');
+    debugger
+  }
+  showSuccessForOrders() {
+    this.toastr.success('', 'Order Added', {
+      timeOut: 3000,
+      'progressBar': true,
+    });
   }
   setPermission() {
     if (localStorage.getItem("isStaff") == "true") {
@@ -80,26 +154,7 @@ export class OrderListComponent implements OnInit {
       'progressBar': true,
     });
   }
-  restaurantOrder() {
-    debugger
-    this.restaurantService.RestaurantOrder(this.RestaurantID).subscribe(
-      data => {
-        this.orderList = data['data'];
-        this.orderList.reverse();
-        for (let i = 0; i < this.orderList.length; i++) {
-          this.orderList[i].TotalAmount = Math.round(this.orderList[i].TotalAmount);
-        }
-        this.restaurantService.updateOrderDetail(this.orderList);
-      },
-      err => {
-      }
-    );
-    setTimeout(() => {
-      if (this.flag) {
-        this.restaurantOrder();
-      }
-    }, 5000);
-  }
+
   // getOrderID(OrderID: any) {
   //   this.orderID = OrderID;
   // }

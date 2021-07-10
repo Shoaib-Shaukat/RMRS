@@ -289,7 +289,6 @@ export class RestaurantAddComponent implements OnInit {
 
 
   getCategory() {
-    debugger
     this.restaurantService.getCategoryName().subscribe(
       data => {
         this.CategoryList = data['data'];
@@ -351,7 +350,6 @@ export class RestaurantAddComponent implements OnInit {
     });
   }
   onSubmit() {
-    debugger
     this.cancel = true;
     if (this.restaurantAddForm.controls['ServiceCharges'].value == "") {
       this.restaurantAddForm.controls['ServiceCharges'].setValue(0);

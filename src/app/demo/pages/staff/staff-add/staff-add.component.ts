@@ -87,7 +87,6 @@ export class StaffAddComponent implements OnInit {
   }
 
   getAllRestaurantList() {
-    debugger
     this.OwnerId = localStorage.getItem("OwnerID");
     this.restaurantService.AllRestaurants(this.OwnerId).subscribe(
       data => {
@@ -109,7 +108,7 @@ export class StaffAddComponent implements OnInit {
     // this.cancel = true;
     // this.menuService.cancelF(this.cancel);
     // this.router.navigate(['/staff/staff-list']);
-    debugger
+
 
     let body =
     {

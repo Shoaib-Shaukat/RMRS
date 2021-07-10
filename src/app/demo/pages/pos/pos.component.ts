@@ -96,9 +96,11 @@ export class PosComponent implements OnInit {
   delivery: any;
   dealArr: any;
   itemArr: any;
+  offlineOrders: any;
   orderConfirming: boolean = false;
   constructor(private currencyPipe: CurrencyPipe, private formBuilder: FormBuilder, private menuService: MenuService, private router: Router, private restaurantService: RestaurantService, private toastr: ToastrService, private indexedDBService: IndexedDBService) {
     this.arrayForInfo = [];
+    this.offlineOrders = [];
     this.dealArr = [];
     this.itemArr = [];
     this.orderToEdit = [];
@@ -936,7 +938,7 @@ export class PosComponent implements OnInit {
       PaymentMethod: this.paymentMethod
     }
     this.restaurantService.RestaurantRecipt(body).subscribe(
-      data => {
+      async data => {
         this.showSuccess();
         this.PaymentSuccessfull = true;
         this.Description = data['data'].description;
@@ -952,8 +954,20 @@ export class PosComponent implements OnInit {
         this.ngOnInit();
 
       },
-      err => {
-        this.showError();
+      async err => {
+        this.offlineOrders.push(body);
+        await this.indexedDBService.addUser(this.offlineOrders, 'OfflineOrdersList');
+        debugger
+        this.a = 0;
+        this.b = 0;
+        this.salesTax = 0;
+        this.subTotal = 0;
+        this.TotalAmount = 0;
+        this.displayItems = [];
+        this.displayItemsTwo = [];
+        this.CustomerForm.reset();
+        this.response = false;
+        this.ngOnInit();
       }
     );
   }
